@@ -46,8 +46,8 @@ function BuriedPlate () {
                     <label htmlFor="width">Ancho</label>
                     <input type="number" id="width" placeholder="Ancho de la placa en metros" value={width} onChange={handleWidthChange}/>
                     <button type="submit">Calcular</button>
-                    <h3>Resistencia de Puesta a Tierra: {resistance}</h3>
                 </form>
+                <h3>Resistencia de Puesta a Tierra: {resistance}</h3>
             </section>
         </section>
     )

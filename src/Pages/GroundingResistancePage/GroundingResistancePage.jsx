@@ -13,7 +13,7 @@ function GroundingResistancePage () {
                     <NavLink to="/grounding_resistance_page/superficial_plates">Placa superficial</NavLink>
                 </li>
                 <li>
-                    <a href="">Barra vertical</a>
+                    <NavLink to="/grounding_resistance_page/grounding_rod">Barra vertical</NavLink>
                 </li>
                 <li>
                     <a href="">Conductor enterrado horizontalmente</a>
