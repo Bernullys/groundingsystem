@@ -16,16 +16,16 @@ function GroundingResistancePage () {
                     <NavLink to="/grounding_resistance_page/grounding_rod">Barra vertical</NavLink>
                 </li>
                 <li>
-                    <a href="">Conductor enterrado horizontalmente</a>
+                    <NavLink to="/grounding_resistance_page/horizontal_grounding_conductor">Conductor enterrado horizontalmente</NavLink>
                 </li>
                 <li>
-                    <a href="">Malla - Laurent + Niemann</a>
+                    <NavLink to="/grounding_resistance_page/laurent_niemann_grid">Malla - Laurent + Niemann</NavLink>
                 </li>
                 <li>
-                    <a href="">Malla - Sverak</a>
+                    <NavLink to="/grounding_resistance_page/sverak_grid">Malla - Sverak</NavLink>
                 </li>
                 <li>
-                    <a href="">Malla - Schwarz</a>
+                    <NavLink to="/grounding_resistance_page/schwarz_grid" >Malla - Schwarz</NavLink>
                 </li>
             </ul>
             <nav>

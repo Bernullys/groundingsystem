@@ -1,0 +1,58 @@
+.sverak_main_container {
+    height: 70vh;
+    display: grid;
+    place-items: center;
+}
+
+.sverak_title_image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sverak_title {
+
+}
+
+.sverak_image {
+
+}
+
+.sverak_form_main_container {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sverak_form_container {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sverak_form_label_inp_container {
+    display: flex;
+    margin: 0 0 24px 0;
+}
+
+.sverak_form_label {
+    width: 12vw;
+    
+}
+
+.sverak_form_inp {
+    width: 48px;
+}
+
+.sverak_form_button {
+    cursor: pointer;
+    width: 120px;
+    height: 36px;
+}
+
+.sverak_result_paragraph {
+    width: 30vw;
+    text-align: center;
+}

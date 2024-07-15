@@ -1,0 +1,58 @@
+.hgc_main_container {
+    height: 70vh;
+    display: grid;
+    place-items: center;
+}
+
+.hgc_title_image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hgc_title {
+
+}
+
+.hgc_image {
+
+}
+
+.hgc_form_main_container {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hgc_form_container {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hgc_form_label_inp_container {
+    display: flex;
+    margin: 0 0 24px 0;
+}
+
+.hgc_form_label {
+    width: 10vw;
+    
+}
+
+.hgc_form_inp {
+    width: 48px;
+}
+
+.hgc_form_button {
+    cursor: pointer;
+    width: 120px;
+    height: 36px;
+}
+
+.hgc_result_paragraph {
+    width: 30vw;
+    text-align: center;
+}

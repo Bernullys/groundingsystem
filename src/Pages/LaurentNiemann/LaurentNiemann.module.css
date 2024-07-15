@@ -1,0 +1,58 @@
+.lau_nie_main_container {
+    height: 70vh;
+    display: grid;
+    place-items: center;
+}
+
+.lau_nie_title_image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lau_nie_title {
+
+}
+
+.lau_nie_image {
+
+}
+
+.lau_nie_form_main_container {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lau_nie_form_container {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lau_nie_form_label_inp_container {
+    display: flex;
+    margin: 0 0 24px 0;
+}
+
+.lau_nie_form_label {
+    width: 12vw;
+    
+}
+
+.lau_nie_form_inp {
+    width: 48px;
+}
+
+.lau_nie_form_button {
+    cursor: pointer;
+    width: 120px;
+    height: 36px;
+}
+
+.lau_nie_result_paragraph {
+    width: 30vw;
+    text-align: center;
+}
