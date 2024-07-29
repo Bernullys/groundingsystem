@@ -1,0 +1,58 @@
+.superficial_plates_main_container {
+    height: 70vh;
+    display: grid;
+    place-items: center;
+}
+
+.grounding_plate_title_image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.grounding_plate_title {
+
+}
+
+.grounding_plate_image {
+
+}
+
+.superficial_plates_form_main_container {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.superficial_plates_form {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.superficial_plates_form_label_inp_container {
+    display: flex;
+    margin: 0 0 24px 0;
+}
+
+.superficial_plates_form_label {
+    width: 10vw;
+    
+}
+
+.superficial_plates_form_inp {
+    width: 48px;
+}
+
+.superficial_plates_form_button {
+    cursor: pointer;
+    width: 120px;
+    height: 36px;
+}
+
+.superficial_plates_result_paragraph {
+    width: 30vw;
+    text-align: center;
+}

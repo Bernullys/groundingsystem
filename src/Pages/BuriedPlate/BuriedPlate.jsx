@@ -34,18 +34,26 @@ function BuriedPlate () {
     return (
         <section id="buried_plates" className={styles.buried_plates_main_container}>
             <section className={styles.buried_plate_title_image_container}>
-                <h2>Placa enterrada</h2>
-                <img src={buried_plate_image} alt="Buried plate" />
+                <h2 className={styles.buried_plate_title}>Placa enterrada</h2>
+                <img className={styles.buried_plate_image} src={buried_plate_image} alt="Buried plate" />
             </section>
-            <section>
+            <section className={styles.buried_plate_form_main_container}>
                 <form onSubmit={handleSubmit} className={styles.buried_plate_form}>
-                    <label htmlFor="resistivity">Resistividad</label>
-                    <input type="number" name="resistivity" id="resistivity" placeholder="Resistividad en metros" value={resistivity} onChange={handleResistivityChange}/>
-                    <label htmlFor="large">Largo</label>
-                    <input type="number" id="large" placeholder="Largo de la placa en metros" value={large} onChange={handleLargeChange}/>
-                    <label htmlFor="width">Ancho</label>
-                    <input type="number" id="width" placeholder="Ancho de la placa en metros" value={width} onChange={handleWidthChange}/>
-                    <button type="submit">Calcular</button>
+                    <div className={styles.buried_plate_form_label_inp_container}>
+                        <label className={styles.buried_plate_form_label} htmlFor="resistivity">Resistividad [Ohm*m]</label>
+                        <input className={styles.buried_plate_form_input} type="number" name="resistivity" id="resistivity" value={resistivity} onChange={handleResistivityChange}/>
+                    </div>
+                    <div className={styles.buried_plate_form_label_inp_container}>
+                        <label className={styles.buried_plate_form_label} htmlFor="large">Largo [m]</label>
+                        <input className={styles.buried_plate_form_input} type="number" id="large" value={large} onChange={handleLargeChange}/>
+                    </div>
+                    <div className={styles.buried_plate_form_label_inp_container}>
+                        <label className={styles.buried_plate_form_label} htmlFor="width">Ancho [m]</label>
+                        <input className={styles.buried_plate_form_input} type="number" id="width" value={width} onChange={handleWidthChange}/>
+                    </div>
+                    <div>
+                        <button className={styles.buried_plate_form_button} type="submit">Calcular</button>
+                    </div>
                 </form>
                 <h3>Resistencia de Puesta a Tierra: {resistance}</h3>
             </section>

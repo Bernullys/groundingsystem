@@ -29,27 +29,27 @@ function SuperficialPlate () {
 
     return (
         <section className={styles.superficial_plates_main_container}>
-            <section>
-                <h2>Placa de Puesta a Tierra Superficial</h2>
-                <img src={grounding_plate_image} alt="Placa de puesta a tierra" />
+            <section className={styles.grounding_plate_title_image}>
+                <h2 className={styles.grounding_plate_title}>Placa de Puesta a Tierra Superficial</h2>
+                <img className={styles.grounding_plate_image} src={grounding_plate_image} alt="Placa de puesta a tierra" />
             </section>
-            <section>
-                <form onSubmit={resistanceValue}>
-                    <div>
-                        <label htmlFor="">Resistividad</label>
-                        <input id="resistivity_id" type="number" value={resistivity} onChange={handleResistivity}/>
+            <section className={styles.superficial_plates_form_main_container}>
+                <form className={styles.superficial_plates_form} onSubmit={resistanceValue}>
+                    <div className={styles.superficial_plates_form_label_inp_container}>
+                        <label className={styles.superficial_plates_form_label}htmlFor="">Resistividad</label>
+                        <input className={styles.superficial_plates_form_inp} id="resistivity_id" type="number" value={resistivity} onChange={handleResistivity}/>
                     </div>
-                    <div>
-                        <label htmlFor="">Largo</label>
-                        <input id="large_id" type="number" value={large} onChange={handleLarge}/>
+                    <div className={styles.superficial_plates_form_label_inp_container}>
+                        <label className={styles.superficial_plates_form_label} htmlFor="">Largo</label>
+                        <input className={styles.superficial_plates_form_inp} id="large_id" type="number" value={large} onChange={handleLarge}/>
                     </div>
-                    <div>
-                        <label htmlFor="">Ancho</label>
-                        <input id="width_id" type="number" value={width} onChange={handleWidth}/>
+                    <div className={styles.superficial_plates_form_label_inp_container} className={styles.superficial_plates_form_label_inp_container}>
+                        <label className={styles.superficial_plates_form_label} htmlFor="">Ancho</label>
+                        <input className={styles.superficial_plates_form_inp} id="width_id" type="number" value={width} onChange={handleWidth}/>
                     </div>                    <div>
-                        <button type="submit">Calcular</button>
+                        <button className={styles.superficial_plates_form_button} type="submit">Calcular</button>
                     </div>
-                    <p>Resistencia de Puesta a Tierra: {resistance}</p>
+                    <p className={styles.superficial_plates_result_paragraph}>Resistencia de Puesta a Tierra: {resistance}</p>
                 </form>
             </section>
 

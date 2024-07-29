@@ -8,6 +8,7 @@ import HorizontalGroundingConductor from "./Pages/HorizontalGroundingConductor/H
 import LaurentNiemann from "./Pages/LaurentNiemann/LaurentNiemann"
 import Sverak from "./Pages/Sverak/Sverak"
 import Schwarz from "./Pages/Schwarz/Schwarz"
+import StepContactVoltage from "./Pages/StepContactVoltage/StepContactVoltage"
 
 const AppRoutes = () => {
   let routes = useRoutes ([
@@ -19,7 +20,8 @@ const AppRoutes = () => {
     { path: "/grounding_resistance_page/horizontal_grounding_conductor", element: <HorizontalGroundingConductor/>},
     { path:"/grounding_resistance_page/laurent_niemann_grid", element:<LaurentNiemann/>},
     { path: "/grounding_resistance_page/sverak_grid", element:<Sverak/>},
-    { path:"/grounding_resistance_page/schwarz_grid", element:<Schwarz/>}
+    { path:"/grounding_resistance_page/schwarz_grid", element:<Schwarz/>},
+    { path:"/step_contact_voltage_page", element: <StepContactVoltage/>}
 
   ])
 

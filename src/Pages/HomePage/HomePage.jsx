@@ -4,12 +4,15 @@ function HomePage() {
     return (
         <section>
             <section>
-                <h1>Página para Ingeniería Eléctrica</h1>
+                <h1>Sistemas de Puesta a Tierra</h1>
             </section>
             <section>
                 <ul>
                     <li>
-                        <a href="#grounding_resistance_page">Sistemas de Puesta a Tierra</a>
+                        <a href="#grounding_resistance_page">Resistencia de Puesta a Tierra</a>
+                    </li>
+                    <li>
+                        <a href="#step_contact_voltage_page">Tensiones de Paso y de Contacto</a>
                     </li>
                 </ul>
             </section>
