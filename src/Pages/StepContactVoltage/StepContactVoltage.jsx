@@ -11,6 +11,34 @@ function StepContactVoltage () {
     const [ts, setTs] = useState()
     const [stepsAndTouchVoltages, setStepsAndTouchVoltages] = useState([])
 
+
+    // Info //
+
+    const realStepTouchVar = {
+        D: "Separación entre electrodos paralelo [m].",
+        Dm: "Máxima distancia entre dos puntos cualesquiera de la malla [m].",
+        d: "Diámetro de los electrodos [m].",
+        h: "Profundidad a la que se encuentra enterrada la cuadrícula [m].",
+        Lx: "Longitud de la malla en la dirección x [m].",
+        Ly: "Longitud de la malla en la dirección y [m].",
+        Lp: "Longitud del perímetro de la malla [m].",
+        Lc: "Longitud total de los electrodos que forman la retícula [m].",
+        LR: "Longitud total de las barras [m].",
+        Lr: "Longitud de una barra [m].",
+        A: "Área que ocupa la malla [m2].",
+        Ro: "Resistividad de la tierra [Ohm*m].",
+        IG: "Corriente máxima asimétrica de la malla [A]."
+    }
+
+    const [gridType, setGridType] = useState("")
+    const [withOrWithoutVerticalRods, setWithOrWithoutVerticalRods] = useState({
+        withVerticalRods: false,
+        withoutVerticalRods: false
+    })
+
+
+    // Functions //
+
     const handleHs = (event) => {
         setHs(event.target.value)
     }
@@ -48,6 +76,18 @@ function StepContactVoltage () {
         }0
     }
 
+    // Real step and tuch voltages functions //
+
+    const handleGridType = (event) => {
+        setGridType(event.target.value)
+    }
+
+    const handleWithVerticalRods = (event) => {     //Look out for an explanation
+        const { name } = event.target
+        setWithOrWithoutVerticalRods(name)
+    }
+
+    console.log(withOrWithoutVerticalRods)
 
     return (
         <section id="step_contact_voltage_page" className={styles.s_c_v_main_container}>
@@ -83,6 +123,25 @@ function StepContactVoltage () {
                 <p>Voltaje de paso (70 kg): {stepsAndTouchVoltages[1]} [V]</p>
                 <p>Voltaje de contacto (50 kg): {stepsAndTouchVoltages[2]} [V]</p>
                 <p>Voltaje de contacto (70 kg): {stepsAndTouchVoltages[3]} [V]</p>
+            </section>
+            <section className={styles.s_c_real_main_container}>
+                <h3>Calculo de Voltajes reales de la malla de puesta a tierra</h3>
+                <section className={styles.s_c_real_selections_container}>
+                    <label htmlFor="">Seleccione el tipo de malla</label>
+                    <select name="gridType" id="gridType" value={gridType} onChange={handleGridType}>
+                        <option value="squerGrid">Malla cuadrada</option>
+                        <option value="rectangularGrid">Malla rectangular o en L</option>
+                        <option value="OtherGrid">Otras formas</option>
+                    </select>
+                    <div>
+                        <label htmlFor="with_vertical_rods">Malla con barras verticales en la periferia</label>
+                        <input type="checkbox" name="withVerticalRods" id="with_vertical_rods" checked={withOrWithoutVerticalRods === "withVerticalRods"} onChange={handleWithVerticalRods}/>
+                    </div>
+                    <div>
+                        <label htmlFor="without_vertical_rods">Malla sin barras verticales en la periferia</label>
+                        <input type="checkbox" name="withoutVerticalRods" id="without_vertical_rods" checked={withOrWithoutVerticalRods === "withoutVerticalRods"} onChange={handleWithVerticalRods}/>
+                    </div>
+                </section>
             </section>
         </section>
     )
