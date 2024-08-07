@@ -15,9 +15,9 @@ function StepContactVoltage () {
     // Info //
 
     const realStepTouchVar = {
-        D: "Separación entre electrodos paralelo [m].",
+        D: "Separación entre conductores en paralelo [m].",
         Dm: "Máxima distancia entre dos puntos cualesquiera de la malla [m].",
-        d: "Diámetro de los electrodos [m].",
+        d: "Diámetro del conductor de malla [m].",
         h: "Profundidad a la que se encuentra enterrada la cuadrícula [m].",
         Lx: "Longitud de la malla en la dirección x [m].",
         Ly: "Longitud de la malla en la dirección y [m].",
@@ -137,9 +137,45 @@ function StepContactVoltage () {
                         <label htmlFor="with_vertical_rods">Malla con barras verticales en la periferia</label>
                         <input type="checkbox" name="withVerticalRods" id="with_vertical_rods" checked={withOrWithoutVerticalRods === "withVerticalRods"} onChange={handleWithVerticalRods}/>
                     </div>
-                    <div>
-                        <label htmlFor="without_vertical_rods">Malla sin barras verticales en la periferia</label>
-                        <input type="checkbox" name="withoutVerticalRods" id="without_vertical_rods" checked={withOrWithoutVerticalRods === "withoutVerticalRods"} onChange={handleWithVerticalRods}/>
+                    <div className={styles.s_c_real_label_inp_container}>
+                        <label className={styles.s_c_real_label} htmlFor="">h Profundidad del reticulado [m]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                    </div>
+                    <div className={styles.s_c_real_label_inp_container}>
+                        <label className={styles.s_c_real_label} htmlFor="">D Separación entre conductores en paralelo [m]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                    </div>
+                    <div className={styles.s_c_real_label_inp_container}>
+                        <label className={styles.s_c_real_label} htmlFor="">Dm Separación máxima entre dos puntos de la malla [m]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                    </div>
+                    <div className={styles.s_c_real_label_inp_container}>
+                        <label className={styles.s_c_real_label} htmlFor="">d Diametro del conductor de malla [m]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                    </div>
+                    <div className={styles.s_c_real_label_inp_container}>
+                        <label className={styles.s_c_real_label} htmlFor="">Lx Largo máximo de malla en eje "x" [m]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                    </div>
+                    <div className={styles.s_c_real_label_inp_container}>
+                        <label className={styles.s_c_real_label} htmlFor="">Ly Largo máximo de malla en eje "y" [m]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                    </div>
+                    <div className={styles.s_c_real_label_inp_container}>
+                        <label className={styles.s_c_real_label} htmlFor="">Lc Largo total del conductor de la malla [m]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                    </div>
+                    <div className={styles.s_c_real_label_inp_container}>
+                        <label className={styles.s_c_real_label} htmlFor="">Lp Largo total del conductor periferico de la malla [m]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                    </div>
+                    <div className={styles.s_c_real_label_inp_container}>
+                        <label className={styles.s_c_real_label} htmlFor="">LR Largo total de las barras verticales [m]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                    </div>
+                    <div className={styles.s_c_real_label_inp_container}>
+                        <label className={styles.s_c_real_label} htmlFor="">Lr Largo de las barras verticales [m]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
                     </div>
                 </section>
             </section>

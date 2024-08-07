@@ -3,3 +3,18 @@
     flex-direction: column;
     width: 20%;
 }
+
+.s_c_real_label_inp_container {
+    display: flex;
+    margin: 0 0 24px 0;
+}
+
+
+.s_c_real_label {
+    width: 10vw;
+    
+}
+
+.s_c_real_inp {
+    width: 48px;
+}
