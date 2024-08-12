@@ -35,6 +35,20 @@ function StepContactVoltage () {
         withVerticalRods: false,
         withoutVerticalRods: false
     })
+    const [gridDepth, setGridDepth] = useState()
+    const [spacingParallelConductors, setSpacingParallelConductors] = useState()
+    const [maximumDistanceAnyTwoPoints, setMaximumDistanceAnyTwoPoints] = useState()
+    const [conductorDiameter, setConductorDiameter] = useState()
+    const [maximumLxLength, setMaximumLxLength] = useState()
+    const [maximumLyLength, setMaximumLyLength] = useState()
+    const [totalConductorLength, setTotalConductorLength] = useState()
+    const [perimeterConductorLength, setPerimeterConductorLength] = useState()
+    const [rodLength, setRodLength] = useState()
+    const [rodTotalLength, setRodTotalLength] = useState()
+    const [gridArea, setGridArea] = useState()
+
+
+    const [na, setNa] = useState("")
 
 
     // Functions //
@@ -87,7 +101,49 @@ function StepContactVoltage () {
         setWithOrWithoutVerticalRods(name)
     }
 
-    console.log(withOrWithoutVerticalRods)
+    const handleGridDepth = (event) => {
+        setGridDepth(event.target.value)
+    }
+
+    const handleSpacingParallelConductors = (event) => {
+        setSpacingParallelConductors(event.target.value)
+    }
+
+    const handleMaximumDistanceAnyTwoPoints= (event) => {
+        setMaximumDistanceAnyTwoPoints(event.target.value)
+    }
+
+    const handleConductorDiameter = (event) => {
+        setConductorDiameter(event.target.value)
+    }
+
+    const handleMaximumLxLength = (event) => {
+        setMaximumLxLength(event.target.value)
+    }
+
+    const handleMaximumLyLength = (event) => {
+        setMaximumLyLength(event.target.value)
+    }
+
+    const handleTotalConductorLength= (event) => {
+        setTotalConductorLength(event.target.value)
+    }
+
+    const handlePerimeterConductorLength= (event) => {
+        setPerimeterConductorLength(event.target.value)
+    }
+    
+    const handleRodLength= (event) => {
+        setRodLength(event.target.value)
+    }
+        
+    const handleRodTotalLength= (event) => {
+        setRodTotalLength(event.target.value)
+    }
+
+    const handleGridArea= (event) => {
+        setGridArea(event.target.value)
+    }
 
     return (
         <section id="step_contact_voltage_page" className={styles.s_c_v_main_container}>
@@ -137,46 +193,57 @@ function StepContactVoltage () {
                         <label htmlFor="with_vertical_rods">Malla con barras verticales en la periferia</label>
                         <input type="checkbox" name="withVerticalRods" id="with_vertical_rods" checked={withOrWithoutVerticalRods === "withVerticalRods"} onChange={handleWithVerticalRods}/>
                     </div>
+                    <div>
+                        <label htmlFor="without_vertical_rods">Malla sin barras verticales en la periferia</label>
+                        <input type="checkbox" name="withoutVerticalRods" id="without_vertical_rods" checked={withOrWithoutVerticalRods === "withoutVerticalRods"} onChange={handleWithVerticalRods}/>
+                    </div>
                     <div className={styles.s_c_real_label_inp_container}>
-                        <label className={styles.s_c_real_label} htmlFor="">h Profundidad del reticulado [m]</label>
-                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                        <label className={styles.s_c_real_label} htmlFor="">h Profundidad de la malla [m]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={gridDepth} onChange={handleGridDepth}/>
                     </div>
                     <div className={styles.s_c_real_label_inp_container}>
                         <label className={styles.s_c_real_label} htmlFor="">D Separación entre conductores en paralelo [m]</label>
-                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={spacingParallelConductors} onChange={handleSpacingParallelConductors}/>
                     </div>
                     <div className={styles.s_c_real_label_inp_container}>
                         <label className={styles.s_c_real_label} htmlFor="">Dm Separación máxima entre dos puntos de la malla [m]</label>
-                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={maximumDistanceAnyTwoPoints} onChange={handleMaximumDistanceAnyTwoPoints}/>
                     </div>
                     <div className={styles.s_c_real_label_inp_container}>
                         <label className={styles.s_c_real_label} htmlFor="">d Diametro del conductor de malla [m]</label>
-                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={conductorDiameter} onChange={handleConductorDiameter}/>
                     </div>
                     <div className={styles.s_c_real_label_inp_container}>
                         <label className={styles.s_c_real_label} htmlFor="">Lx Largo máximo de malla en eje "x" [m]</label>
-                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={maximumLxLength} onChange={handleMaximumLxLength}/>
                     </div>
                     <div className={styles.s_c_real_label_inp_container}>
                         <label className={styles.s_c_real_label} htmlFor="">Ly Largo máximo de malla en eje "y" [m]</label>
-                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={maximumLyLength} onChange={handleMaximumLyLength}/>
                     </div>
                     <div className={styles.s_c_real_label_inp_container}>
                         <label className={styles.s_c_real_label} htmlFor="">Lc Largo total del conductor de la malla [m]</label>
-                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={totalConductorLength} onChange={handleTotalConductorLength}/>
                     </div>
                     <div className={styles.s_c_real_label_inp_container}>
                         <label className={styles.s_c_real_label} htmlFor="">Lp Largo total del conductor periferico de la malla [m]</label>
-                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
-                    </div>
-                    <div className={styles.s_c_real_label_inp_container}>
-                        <label className={styles.s_c_real_label} htmlFor="">LR Largo total de las barras verticales [m]</label>
-                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={perimeterConductorLength} onChange={handlePerimeterConductorLength}/>
                     </div>
                     <div className={styles.s_c_real_label_inp_container}>
                         <label className={styles.s_c_real_label} htmlFor="">Lr Largo de las barras verticales [m]</label>
-                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={""} onChange={""}/>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={rodLength} onChange={handleRodLength}/>
                     </div>
+                    <div className={styles.s_c_real_label_inp_container}>
+                        <label className={styles.s_c_real_label} htmlFor="">LR Largo total de las barras verticales [m]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={rodTotalLength} onChange={handleRodTotalLength}/>
+                    </div>
+                    <div className={styles.s_c_real_label_inp_container}>
+                        <label className={styles.s_c_real_label} htmlFor="">Área de la malla [m2]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={gridArea} onChange={handleGridArea}/>
+                    </div>
+                </section>
+                <section className={styles.s_c_real_parameters_container}>
+                    <p>Factor de composición geometrico na = </p>
                 </section>
             </section>
         </section>
