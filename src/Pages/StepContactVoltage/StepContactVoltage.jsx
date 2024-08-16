@@ -106,47 +106,49 @@ function StepContactVoltage () {
     }
 
     const handleGridDepth = (event) => {
-        setGridDepth(event.target.value)
+        setGridDepth(parseFloat(event.target.value))
     }
+    console.log(gridDepth)
+    console.log(typeof(gridDepth))
 
     const handleSpacingParallelConductors = (event) => {
-        setSpacingParallelConductors(event.target.value)
+        setSpacingParallelConductors(parseFloat(event.target.value))
     }
 
     const handleMaximumDistanceAnyTwoPoints= (event) => {
-        setMaximumDistanceAnyTwoPoints(event.target.value)
+        setMaximumDistanceAnyTwoPoints(parseFloat(event.target.value))
     }
 
     const handleConductorDiameter = (event) => {
-        setConductorDiameter(event.target.value)
+        setConductorDiameter(parseFloat(event.target.value))
     }
 
     const handleMaximumLxLength = (event) => {
-        setMaximumLxLength(event.target.value)
+        setMaximumLxLength(parseFloat(event.target.value))
     }
 
     const handleMaximumLyLength = (event) => {
-        setMaximumLyLength(event.target.value)
+        setMaximumLyLength(parseFloat(event.target.value))
     }
 
     const handleTotalConductorLength= (event) => {
-        setTotalConductorLength(event.target.value)
+        setTotalConductorLength(parseFloat(event.target.value))
     }
 
     const handlePerimeterConductorLength= (event) => {
-        setPerimeterConductorLength(event.target.value)
+        setPerimeterConductorLength(parseFloat(event.target.value))
     }
     
     const handleRodLength= (event) => {
-        setRodLength(event.target.value)
+        setRodLength(parseFloat(event.target.value))
     }
         
     const handleRodTotalLength= (event) => {
-        setRodTotalLength(event.target.value)
+        setRodTotalLength(parseFloat(event.target.value))
     }
 
     const handleGridArea= (event) => {
-        setGridArea(event.target.value)
+        setGridArea(parseFloat(event.target.value))
     }
 
     // Geometrical factors functions //
@@ -165,6 +167,7 @@ function StepContactVoltage () {
         }
         setGeometricalFactors([na, nb, nc, nd]);
         setGeometricalFactor((geometricalFactors[0]*geometricalFactors[1]*geometricalFactors[2]*geometricalFactors[3]).toFixed(4))
+        console.log(typeof(geometricalFactor), "geometricalfactor")
     }
 
     const handleCorrectionFactors = () => {
@@ -178,13 +181,15 @@ function StepContactVoltage () {
             setLm(rodTotalLength+totalConductorLength)
         }
         ki = 0.644 + 0.148*geometricalFactor
-        kh = (Math.sqrt(1+(gridDepth/1))).toFixed(4)
+        kh = parseFloat((Math.sqrt(1+(gridDepth/1))).toFixed(4))
         setCorrectionsFactors([ki, kii, kh])
+        
 
         parseFloat(spacingParallelConductors)
 
         setKm(((1/(2*Math.PI)) * Math.log(((spacingParallelConductors**2)/(16*gridDepth*conductorDiameter)) + (((spacingParallelConductors+2*gridDepth)**2)/(8*spacingParallelConductors*conductorDiameter)) - (gridDepth/(4*conductorDiameter))) + ((correctionFactors[1])/(correctionFactors[2])) * Math.log((8/(Math.PI*(2*geometricalFactor-1))))).toFixed(4))
 
+        console.log(typeof(km), "km")
         console.log(typeof(parseFloat(rodLength)))
         console.log(1/(2*Math.PI))
         console.log(((spacingParallelConductors**2)/(16*gridDepth*conductorDiameter)))
@@ -192,6 +197,7 @@ function StepContactVoltage () {
         console.log((gridDepth/(4*conductorDiameter)))
         console.log(((correctionFactors[1])/(correctionFactors[2])))
         console.log((8/(Math.PI*(2*geometricalFactor-1))))
+        console.log(typeof(km), "km")
     }
 
 
