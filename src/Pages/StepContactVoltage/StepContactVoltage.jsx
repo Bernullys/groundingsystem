@@ -47,9 +47,13 @@ function StepContactVoltage () {
     const [rodTotalLength, setRodTotalLength] = useState()
     const [gridArea, setGridArea] = useState()
 
+    const [geometricalFactors, setGeometricalFactors] = useState([])
+    const [geometricalFactor, setGeometricalFactor] = useState()
 
-    const [na, setNa] = useState("")
+    const [correctionFactors, setCorrectionsFactors] = useState([])
+    const [km, setKm] = useState()
 
+    const [lm, setLm] = useState()
 
     // Functions //
 
@@ -87,7 +91,7 @@ function StepContactVoltage () {
             setStepsAndTouchVoltages([step50, step70, touch50, touch70])
         } else {
             alert("Debes calcular Cs e ingresar ts. Todos los valores deben ser > 0")
-        }0
+        }
     }
 
     // Real step and tuch voltages functions //
@@ -145,6 +149,52 @@ function StepContactVoltage () {
         setGridArea(event.target.value)
     }
 
+    // Geometrical factors functions //
+
+
+    const handleGeometricalFactors = () => {
+        const na = (2*totalConductorLength/totalConductorLength).toFixed(4)
+        let nb, nc, nd;
+        if (gridType == "squerGrid") {
+            nb = nc = nd = 1;
+        } else {
+            nb = (Math.sqrt(perimeterConductorLength/(4*Math.sqrt(gridArea)))).toFixed(4)
+            const suportVariable = ((0.7*gridArea)/(maximumLxLength*maximumLyLength)).toFixed(4)
+            nc = ((maximumLxLength*maximumLyLength/gridArea)**suportVariable).toFixed(4)
+            nd = gridType == "otherGrid" ? ((maximumDistanceAnyTwoPoints)/(Math.sqrt((maximumLxLength**2)+(maximumLyLength**2)))).toFixed(4) : 1;
+        }
+        setGeometricalFactors([na, nb, nc, nd]);
+        setGeometricalFactor((geometricalFactors[0]*geometricalFactors[1]*geometricalFactors[2]*geometricalFactors[3]).toFixed(4))
+    }
+
+    const handleCorrectionFactors = () => {
+        let ki, kii, kh;
+        if (withOrWithoutVerticalRods == "withVerticalRods") {
+            kii = 1;
+            setLm(((totalConductorLength) + (1.55 + 1.22 * ((rodLength)/(Math.sqrt((maximumLxLength**2)+(maximumLyLength**2)))))*rodTotalLength).toFixed(4))
+        } else {
+            const suportExponent = 2/geometricalFactor
+            kii = (1/(2*geometricalFactor)**suportExponent).toFixed(4)
+            setLm(rodTotalLength+totalConductorLength)
+        }
+        ki = 0.644 + 0.148*geometricalFactor
+        kh = (Math.sqrt(1+(gridDepth/1))).toFixed(4)
+        setCorrectionsFactors([ki, kii, kh])
+
+        parseFloat(spacingParallelConductors)
+
+        setKm(((1/(2*Math.PI)) * Math.log(((spacingParallelConductors**2)/(16*gridDepth*conductorDiameter)) + (((spacingParallelConductors+2*gridDepth)**2)/(8*spacingParallelConductors*conductorDiameter)) - (gridDepth/(4*conductorDiameter))) + ((correctionFactors[1])/(correctionFactors[2])) * Math.log((8/(Math.PI*(2*geometricalFactor-1))))).toFixed(4))
+
+        console.log(typeof(parseFloat(rodLength)))
+        console.log(1/(2*Math.PI))
+        console.log(((spacingParallelConductors**2)/(16*gridDepth*conductorDiameter)))
+        console.log(((((spacingParallelConductors+(2*gridDepth))**2))/(8*spacingParallelConductors*conductorDiameter)))
+        console.log((gridDepth/(4*conductorDiameter)))
+        console.log(((correctionFactors[1])/(correctionFactors[2])))
+        console.log((8/(Math.PI*(2*geometricalFactor-1))))
+    }
+
+
     return (
         <section id="step_contact_voltage_page" className={styles.s_c_v_main_container}>
             <section className={styles.s_c_v_title_container} >
@@ -187,7 +237,7 @@ function StepContactVoltage () {
                     <select name="gridType" id="gridType" value={gridType} onChange={handleGridType}>
                         <option value="squerGrid">Malla cuadrada</option>
                         <option value="rectangularGrid">Malla rectangular o en L</option>
-                        <option value="OtherGrid">Otras formas</option>
+                        <option value="otherGrid">Otras formas</option>
                     </select>
                     <div>
                         <label htmlFor="with_vertical_rods">Malla con barras verticales en la periferia</label>
@@ -242,8 +292,23 @@ function StepContactVoltage () {
                         <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={gridArea} onChange={handleGridArea}/>
                     </div>
                 </section>
-                <section className={styles.s_c_real_parameters_container}>
-                    <p>Factor de composición geometrico na = </p>
+                <section className={styles.s_c_real_geometrical_parameters_container}>
+                    <label htmlFor="">Calcular Factores de composición geometrica</label>
+                    <button type="button" onClick={handleGeometricalFactors}>Calcular n</button>
+                    <p>Factor de composición geometrico na = {geometricalFactors[0]}</p>
+                    <p>Factor de composición geometrico nb = {geometricalFactors[1]}</p>
+                    <p>Factor de composición geometrico nc = {geometricalFactors[2]}</p>
+                    <p>Factor de composición geometrico nd = {geometricalFactors[3]}</p>
+                    <p>Factor de composición geometrico n = {geometricalFactor}</p>
+                </section>
+                <section>
+                    <label htmlFor="">Calcular factores de corrección K</label>
+                    <button type="button" onClick={handleCorrectionFactors}>Calcular K</button>
+                    <p>Factor de corrección de geometria de la malla Ki = {correctionFactors[0]} </p>
+                    <p>Factor de corrección de peso que ajusta los efectos de los conductores internos de la malla Kii = {correctionFactors[1]} </p>
+                    <p>Factor de corrección de peso que ajusta los efectos de la profuncdidad de la malla Kh = {correctionFactors[2]} </p>
+                    <p>Factor espaciamiento para el voltaje de contacto a malla Km = {km} </p>
+                    <p>Largo efectivo de la malla de Lc y LR para voltaje de contacto a malla LM = {lm} [m]</p>
                 </section>
             </section>
         </section>
