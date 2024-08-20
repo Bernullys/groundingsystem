@@ -1,4 +1,5 @@
 import { useState } from "react"
+import PropTypes from "prop-types"
 import styles from "./StepContactVoltage.module.css"
 
 function StepContactVoltage () {
@@ -11,30 +12,12 @@ function StepContactVoltage () {
     const [ts, setTs] = useState()
     const [stepsAndTouchVoltages, setStepsAndTouchVoltages] = useState([])
 
-
-    // Info //
-
-    const realStepTouchVar = {
-        D: "Separación entre conductores en paralelo [m].",
-        Dm: "Máxima distancia entre dos puntos cualesquiera de la malla [m].",
-        d: "Diámetro del conductor de malla [m].",
-        h: "Profundidad a la que se encuentra enterrada la cuadrícula [m].",
-        Lx: "Longitud de la malla en la dirección x [m].",
-        Ly: "Longitud de la malla en la dirección y [m].",
-        Lp: "Longitud del perímetro de la malla [m].",
-        Lc: "Longitud total de los electrodos que forman la retícula [m].",
-        LR: "Longitud total de las barras [m].",
-        Lr: "Longitud de una barra [m].",
-        A: "Área que ocupa la malla [m2].",
-        Ro: "Resistividad de la tierra [Ohm*m].",
-        IG: "Corriente máxima asimétrica de la malla [A]."
-    }
-
     const [gridType, setGridType] = useState("")
     const [withOrWithoutVerticalRods, setWithOrWithoutVerticalRods] = useState({
         withVerticalRods: false,
         withoutVerticalRods: false
     })
+
     const [gridDepth, setGridDepth] = useState()
     const [spacingParallelConductors, setSpacingParallelConductors] = useState()
     const [maximumDistanceAnyTwoPoints, setMaximumDistanceAnyTwoPoints] = useState()
@@ -55,18 +38,30 @@ function StepContactVoltage () {
 
     const [lm, setLm] = useState()
 
+    const [maximumGridCurrent, setMaximumGridCurrent] = useState()
+    const [touchVoltage, setTouchVoltage] = useState()
+
+    const [ls, setLs] = useState()
+    const [ks, setKs] = useState()
+    const [stepVoltage, setStepVoltage] = useState()
+
+
     // Functions //
 
     const handleHs = (event) => {
         setHs(event.target.value)
     }
 
+    // Superficial resistivity
     const handleSResistivity = (event) => {
-        setSResistivity(event.target.value)
+        setSResistivity(parseFloat(event.target.value))
     }
 
+    // ground resistivity
     const handleResistivity = (event) => {
-        setResistivity(event.target.value)
+        const resistivityValue = parseFloat(event.target.value)
+        console.log(typeof(resistivityValue))
+        setResistivity(resistivityValue)
     }
 
     const handleTs = (event) => {
@@ -74,7 +69,7 @@ function StepContactVoltage () {
     }
 
     const csValue = (event) => {
-        if ( resistivity > 0 && sResistivity > 0 && hs > 0){
+        if ( resistivity > 0 && sResistivity > 0 && hs > 0) {
             event.preventDefault(event)
             setCs((1 - ((0.09 * (1 - resistivity/sResistivity))/(2 * hs + (0.09)))).toFixed(4))
         } else {
@@ -100,7 +95,7 @@ function StepContactVoltage () {
         setGridType(event.target.value)
     }
 
-    const handleWithVerticalRods = (event) => {     //Look out for an explanation
+    const handleWithVerticalRods = (event) => {     //Look out for an explination
         const { name } = event.target
         setWithOrWithoutVerticalRods(name)
     }
@@ -108,8 +103,6 @@ function StepContactVoltage () {
     const handleGridDepth = (event) => {
         setGridDepth(parseFloat(event.target.value))
     }
-    console.log(gridDepth)
-    console.log(typeof(gridDepth))
 
     const handleSpacingParallelConductors = (event) => {
         setSpacingParallelConductors(parseFloat(event.target.value))
@@ -150,9 +143,12 @@ function StepContactVoltage () {
     const handleGridArea= (event) => {
         setGridArea(parseFloat(event.target.value))
     }
+    
+    const handleMaximumGridCurrent = (event) => {
+        setMaximumGridCurrent(parseFloat(event.target.value))
+    }
 
     // Geometrical factors functions //
-
 
     const handleGeometricalFactors = () => {
         const na = (2*totalConductorLength/totalConductorLength).toFixed(4)
@@ -184,22 +180,24 @@ function StepContactVoltage () {
         kh = parseFloat((Math.sqrt(1+(gridDepth/1))).toFixed(4))
         setCorrectionsFactors([ki, kii, kh])
         
-
         parseFloat(spacingParallelConductors)
 
         setKm(((1/(2*Math.PI)) * Math.log(((spacingParallelConductors**2)/(16*gridDepth*conductorDiameter)) + (((spacingParallelConductors+2*gridDepth)**2)/(8*spacingParallelConductors*conductorDiameter)) - (gridDepth/(4*conductorDiameter))) + ((correctionFactors[1])/(correctionFactors[2])) * Math.log((8/(Math.PI*(2*geometricalFactor-1))))).toFixed(4))
-
-        console.log(typeof(km), "km")
-        console.log(typeof(parseFloat(rodLength)))
-        console.log(1/(2*Math.PI))
-        console.log(((spacingParallelConductors**2)/(16*gridDepth*conductorDiameter)))
-        console.log(((((spacingParallelConductors+(2*gridDepth))**2))/(8*spacingParallelConductors*conductorDiameter)))
-        console.log((gridDepth/(4*conductorDiameter)))
-        console.log(((correctionFactors[1])/(correctionFactors[2])))
-        console.log((8/(Math.PI*(2*geometricalFactor-1))))
-        console.log(typeof(km), "km")
     }
 
+    const handleTouchVoltage = () => {
+        console.log(typeof(resistivity), km, correctionFactors[0], maximumGridCurrent)
+        setTouchVoltage(((resistivity*km*correctionFactors[0]*maximumGridCurrent)/(lm)).toFixed(4))
+    }
+
+    const handleLsAndKs = () => {
+        setLs(((0.75*totalConductorLength)+(0.85*rodTotalLength)).toFixed(4))
+        setKs(((1/Math.PI)*((1/(2*gridDepth))+(1/(spacingParallelConductors+gridDepth))+((1/spacingParallelConductors)*(1-(0.5)**(geometricalFactor-2))))).toFixed(4))
+    }
+
+    const handleStepVoltage = () => {
+        setStepVoltage(((resistivity*ks*correctionFactors[0]*maximumGridCurrent)/(ls)).toFixed(4))
+    }
 
     return (
         <section id="step_contact_voltage_page" className={styles.s_c_v_main_container}>
@@ -297,6 +295,10 @@ function StepContactVoltage () {
                         <label className={styles.s_c_real_label} htmlFor="">Área de la malla [m2]</label>
                         <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={gridArea} onChange={handleGridArea}/>
                     </div>
+                    <div className={styles.s_c_real_label_inp_container}>
+                        <label className={styles.s_c_real_label} htmlFor="">Ig [A]</label>
+                        <input className={styles.s_c_real_inp} id="" type="number" step="0.0001" value={maximumGridCurrent} onChange={handleMaximumGridCurrent}/>
+                    </div>
                 </section>
                 <section className={styles.s_c_real_geometrical_parameters_container}>
                     <label htmlFor="">Calcular Factores de composición geometrica</label>
@@ -316,9 +318,29 @@ function StepContactVoltage () {
                     <p>Factor espaciamiento para el voltaje de contacto a malla Km = {km} </p>
                     <p>Largo efectivo de la malla de Lc y LR para voltaje de contacto a malla LM = {lm} [m]</p>
                 </section>
+                <section>
+                    <label htmlFor="">Calcular el voltaje de malla real</label>
+                    <button onClick={handleTouchVoltage}>Calcular Vc</button>
+                    <p>Voltaje de contacto real = {`${touchVoltage} V`}</p>
+                </section>
+                <div className={styles.s_c_real_label_inp_container}>
+                    <label className={styles.s_c_real_label} htmlFor="">Calcular Ks y Ls para Voltaje de paso real</label>
+                    <button onClick={handleLsAndKs}>Calcular Ks y Ls</button>
+                    <p>Largo efectivo Lc y LR para el voltaje de paso Ls: {`${ls} V`}</p>
+                    <p>Factor de separación para el voltaje de paso Ks: {`${ks} V`}</p>
+                </div>
+                <section>
+                    <label htmlFor="">Calcular el voltaje de paso real</label>
+                    <button onClick={handleStepVoltage}>Calcular Vp</button>
+                    <p>Voltaje de paso real = {`${stepVoltage} V`}</p>
+                </section>
             </section>
         </section>
     )
+}
+
+StepContactVoltage.PropTypes = {
+    resistivity: PropTypes.number
 }
 
 export default StepContactVoltage
