@@ -4,207 +4,289 @@ import styles from "./StepContactVoltage.module.css"
 
 function StepContactVoltage () {
 
+    // Function to check if all inputs are number //
+    const checkForNumber = (arrayOfVariables) => {
+        if (arrayOfVariables.every(item => typeof item === 'number' && item > 0)) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    // Custon Hook to validate inputs > 0 //
+    const usePositiveInput = () => {
+        let [value, setValue] = useState()
+
+        const handleChange = (event) => {
+            const newValue = parseFloat(event.target.value)
+            setValue(newValue)
+        }
+        return [Number(value), handleChange]
+    }
+
+    // Variables to stimate cs (correction factor) //
     const [hs, setHs] = useState()
     const [sResistivity, setSResistivity] = useState()
     const [resistivity, setResistivity] = useState()
+
+    // Variable to store cs value //
     const [cs, setCs] = useState()
 
+    // Variables to calculate tolerable touch and step voltages //
     const [ts, setTs] = useState()
+
+    // Variable to store tolerables step and touch voltages //
     const [stepsAndTouchVoltages, setStepsAndTouchVoltages] = useState([])
 
+    // Variables to calculate geometrical factors and after that calculate corrections factors//
     const [gridType, setGridType] = useState("squerGrid")
     const [withOrWithoutVerticalRods, setWithOrWithoutVerticalRods] = useState("withVerticalRods")
+    // Variables to calculate geometrical factor using usePositiviInput Hook //
+    const [gridDepth, setGridDepth] = usePositiveInput()
+    const [spacingParallelConductors, setSpacingParallelConductors] = usePositiveInput()
+    const [maximumDistanceAnyTwoPoints, setMaximumDistanceAnyTwoPoints] = usePositiveInput()
+    const [conductorDiameter, setConductorDiameter] = usePositiveInput()
+    const [maximumLxLength, setMaximumLxLength] = usePositiveInput()
+    const [maximumLyLength, setMaximumLyLength] = usePositiveInput()
+    const [totalConductorLength, setTotalConductorLength] = usePositiveInput()
+    const [perimeterConductorLength, setPerimeterConductorLength] = usePositiveInput()
+    const [rodLength, setRodLength] = usePositiveInput()
+    const [rodTotalLength, setRodTotalLength] = usePositiveInput()
+    const [gridArea, setGridArea] = usePositiveInput()
+    const [maximumGridCurrent, setMaximumGridCurrent] = usePositiveInput()
 
-    const [gridDepth, setGridDepth] = useState()
-    const [spacingParallelConductors, setSpacingParallelConductors] = useState()
-    const [maximumDistanceAnyTwoPoints, setMaximumDistanceAnyTwoPoints] = useState()
-    const [conductorDiameter, setConductorDiameter] = useState()
-    const [maximumLxLength, setMaximumLxLength] = useState()
-    const [maximumLyLength, setMaximumLyLength] = useState()
-    const [totalConductorLength, setTotalConductorLength] = useState()
-    const [perimeterConductorLength, setPerimeterConductorLength] = useState()
-    const [rodLength, setRodLength] = useState()
-    const [rodTotalLength, setRodTotalLength] = useState()
-    const [gridArea, setGridArea] = useState()
-
+    // Variables to store geometrical factors //
     const [geometricalFactors, setGeometricalFactors] = useState([])
     const [geometricalFactor, setGeometricalFactor] = useState()
 
+    // Variables to store correction factors //
     const [correctionFactors, setCorrectionsFactors] = useState([])
     const [km, setKm] = useState()
-
     const [lm, setLm] = useState()
 
-    const [maximumGridCurrent, setMaximumGridCurrent] = useState()
+    // Variable to store real mesh or touch voltage //
     const [touchVoltage, setTouchVoltage] = useState()
 
+    // Variables to store step voltage factors //
     const [ls, setLs] = useState()
     const [ks, setKs] = useState()
+
+    // Variable to store real step voltage //
     const [stepVoltage, setStepVoltage] = useState()
 
+    ///////////////// Functions //////////////////////
 
-    // Functions //
-
+    // Handle hs input //
     const handleHs = (event) => {
-        setHs(event.target.value)
+        setHs(parseFloat(event.target.value))
     }
 
-    // Superficial resistivity
+    // Handle superficial resistivity input //
     const handleSResistivity = (event) => {
         setSResistivity(parseFloat(event.target.value))
     }
 
-    // ground resistivity
+    // Handle ground resistivity input //
     const handleResistivity = (event) => {
         const resistivityValue = parseFloat(event.target.value)
-        console.log(typeof(resistivityValue))
         setResistivity(resistivityValue)
     }
 
+    // Handle ts input //
     const handleTs = (event) => {
-        setTs(event.target.value)
+        setTs(parseFloat(event.target.value))
     }
 
+    // Calculating cs using a form //
     const csValue = (event) => {
-        if ( resistivity > 0 && sResistivity > 0 && hs > 0) {
-            event.preventDefault(event)
-            setCs((1 - ((0.09 * (1 - resistivity/sResistivity))/(2 * hs + (0.09)))).toFixed(4))
+        event.preventDefault(event)
+        let checking = checkForNumber([resistivity, sResistivity, hs])
+        if (checking) {
+            const csValue = Number((1 - ((0.09 * (1 - resistivity/sResistivity))/(2 * hs + (0.09)))).toFixed(4))
+            setCs(csValue)
         } else {
-            alert("Debes ingresar todos los valores mayores a 0")
+            alert("Todos los valores deben ser mayores a cero")
+            setCs(Number())
         }
     }
 
+    // Calculating tolerables step and touch voltages // 
     const stepContactVoltages = () => {
-        if (cs > 0 && ts > 0 && sResistivity > 0) {
-            const step50 = ((1000 + 6 * cs * sResistivity) * 0.116/Math.sqrt(ts)).toFixed(4)
-            const step70 = ((1000 + 6 * cs * sResistivity) * 0.157/Math.sqrt(ts)).toFixed(4)
-            const touch50 = ((1000 + 1.5 * cs * sResistivity) * 0.116/Math.sqrt(ts)).toFixed(4)
-            const touch70 = ((1000 + 1.5 * cs * sResistivity) * 0.157/Math.sqrt(ts)).toFixed(4)
+        let checking = checkForNumber([cs, ts, sResistivity])
+        if (checking) {
+            const step50 = Number(((1000 + 6 * cs * sResistivity) * 0.116/Math.sqrt(ts)).toFixed(4))
+            const step70 = Number(((1000 + 6 * cs * sResistivity) * 0.157/Math.sqrt(ts)).toFixed(4))
+            const touch50 = Number(((1000 + 1.5 * cs * sResistivity) * 0.116/Math.sqrt(ts)).toFixed(4))
+            const touch70 = Number(((1000 + 1.5 * cs * sResistivity) * 0.157/Math.sqrt(ts)).toFixed(4))
             setStepsAndTouchVoltages([step50, step70, touch50, touch70])
         } else {
-            alert("Debes calcular Cs e ingresar ts. Todos los valores deben ser > 0")
+            alert("Debes calcular Cs e ingresar ts. Todos los valores deben ser > 0");
+            setStepsAndTouchVoltages([])
         }
     }
 
-    // Real step and tuch voltages functions //
-
+    // Handle grid type select input //
     const handleGridType = (event) => {
         setGridType(event.target.value)
     }
 
-    const handleWithVerticalRods = (event) => {     //Look out for an explination
+    // Handle with or without vertical rods check input //
+    const handleVerticalRods = (event) => {
         const { name } = event.target
         setWithOrWithoutVerticalRods(name)
     }
 
-    const handleGridDepth = (event) => {
-        setGridDepth(parseFloat(event.target.value))
-    }
-
-    const handleSpacingParallelConductors = (event) => {
-        setSpacingParallelConductors(parseFloat(event.target.value))
-    }
-
-    const handleMaximumDistanceAnyTwoPoints= (event) => {
-        setMaximumDistanceAnyTwoPoints(parseFloat(event.target.value))
-    }
-
-    const handleConductorDiameter = (event) => {
-        setConductorDiameter(parseFloat(event.target.value))
-    }
-
-    const handleMaximumLxLength = (event) => {
-        setMaximumLxLength(parseFloat(event.target.value))
-    }
-
-    const handleMaximumLyLength = (event) => {
-        setMaximumLyLength(parseFloat(event.target.value))
-    }
-
-    const handleTotalConductorLength= (event) => {
-        setTotalConductorLength(parseFloat(event.target.value))
-    }
-
-    const handlePerimeterConductorLength= (event) => {
-        setPerimeterConductorLength(parseFloat(event.target.value))
-    }
+    /////////////// These handle input functions where deactivate because I changed the useState to usePositiveInput Hook /////////////////////////// 
+    // const handleGridDepth = (event) => {
+    //     setGridDepth(parseFloat(event.target.value))
+    // }
+    // const handleSpacingParallelConductors = (event) => {
+    //     setSpacingParallelConductors(parseFloat(event.target.value))
+    // }
+    // const handleMaximumDistanceAnyTwoPoints= (event) => {
+    //     setMaximumDistanceAnyTwoPoints(parseFloat(event.target.value))
+    // }
+    // const handleConductorDiameter = (event) => {
+    //     setConductorDiameter(parseFloat(event.target.value))
+    // }
+    // const handleMaximumLxLength = (event) => {
+    //     setMaximumLxLength(parseFloat(event.target.value))
+    // }
+    // const handleMaximumLyLength = (event) => {
+    //     setMaximumLyLength(parseFloat(event.target.value))
+    // }
+    // const handleTotalConductorLength= (event) => {
+    //     setTotalConductorLength(parseFloat(event.target.value))
+    // }
+    // const handlePerimeterConductorLength= (event) => {
+    //     setPerimeterConductorLength(parseFloat(event.target.value))
+    // }
+    // const handleRodLength= (event) => {
+    //     setRodLength(parseFloat(event.target.value))
+    // }
+    // const handleRodTotalLength= (event) => {
+    //     setRodTotalLength(parseFloat(event.target.value))
+    // }
+    // const handleGridArea= (event) => {
+    //     setGridArea(parseFloat(event.target.value))
+    // }
+    // const handleMaximumGridCurrent = (event) => {
+    //     setMaximumGridCurrent(parseFloat(event.target.value))
+    // }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    const handleRodLength= (event) => {
-        setRodLength(parseFloat(event.target.value))
-    }
-        
-    const handleRodTotalLength= (event) => {
-        setRodTotalLength(parseFloat(event.target.value))
-    }
-
-    const handleGridArea= (event) => {
-        setGridArea(parseFloat(event.target.value))
-    }
-    
-    const handleMaximumGridCurrent = (event) => {
-        setMaximumGridCurrent(parseFloat(event.target.value))
-    }
-
-    // Geometrical factors functions //
-
+    // Handle Geometrical factors //
     async function handleGeometricalFactors () {
-        let na = (2*totalConductorLength/perimeterConductorLength).toFixed(6)
-        let nb, nc, nd;
-        if (gridType == "squerGrid") {
-            nb = nc = nd = 1;
+        let checkingVariables = checkForNumber([gridDepth, spacingParallelConductors, conductorDiameter, totalConductorLength, perimeterConductorLength, gridArea, maximumLxLength, maximumLyLength, maximumDistanceAnyTwoPoints])
+        if (checkingVariables) {
+            let na = Number((2*totalConductorLength/perimeterConductorLength).toFixed(6))
+            let nb, nc, nd;
+            if (gridType == "squerGrid") {
+                nb = nc = nd = 1;
+            } else {
+                nb = Number((Math.sqrt(perimeterConductorLength/(4*Math.sqrt(gridArea)))).toFixed(6))
+                const suportVariable = Number(((0.7*gridArea)/(maximumLxLength*maximumLyLength)).toFixed(6))
+                nc = gridType == "rectangularGrid" ? 1 : Number(((maximumLxLength*maximumLyLength/gridArea)**suportVariable).toFixed(6))
+                nd = gridType == "otherGrid" ? Number(((maximumDistanceAnyTwoPoints)/(Math.sqrt((maximumLxLength**2)+(maximumLyLength**2)))).toFixed(6)) : 1;
+            }
+            const gFactors = [na, nb, nc, nd]
+            setGeometricalFactors(gFactors)
+            return gFactors
         } else {
-            nb = (Math.sqrt(perimeterConductorLength/(4*Math.sqrt(gridArea)))).toFixed(6)
-            const suportVariable = ((0.7*gridArea)/(maximumLxLength*maximumLyLength)).toFixed(6)
-            nc = ((maximumLxLength*maximumLyLength/gridArea)**suportVariable).toFixed(6)
-            nd = gridType == "otherGrid" ? ((maximumDistanceAnyTwoPoints)/(Math.sqrt((maximumLxLength**2)+(maximumLyLength**2)))).toFixed(6) : 1;
+            alert("Debes ingresar todos los datos anteriores para realizar el calculo de n. Todos los datos deben ser > 0.")
+            setGeometricalFactors([])
+            setGeometricalFactor()
         }
-        const gFactors = [na, nb, nc, nd]
-        setGeometricalFactors(gFactors)
-        return gFactors
     }
     
+    // Handle geometrical factor n //
     async function handleGeometricalFactor () {
         let geometricalFactorsResults = await handleGeometricalFactors();
-        setGeometricalFactor((geometricalFactorsResults[0]*geometricalFactorsResults[1]*geometricalFactorsResults[2]*geometricalFactorsResults[3]).toFixed(6))
+        let geometricalFactorHere = Number((geometricalFactorsResults[0]*geometricalFactorsResults[1]*geometricalFactorsResults[2]*geometricalFactorsResults[3]).toFixed(6))
+        setGeometricalFactor(geometricalFactorHere)
     }
 
-    async function handleCorrectionFactors () {
-        let ki, kii, kh;
-        if (withOrWithoutVerticalRods == "withVerticalRods") {
-            kii = 1;
-            setLm(((totalConductorLength) + (1.55 + 1.22 * ((rodLength)/(Math.sqrt((maximumLxLength**2)+(maximumLyLength**2)))))*rodTotalLength).toFixed(6))
+    // Handle correction factors //
+    async function handleCorrectionFactors (withWhithSomeWithout) {
+
+        if (geometricalFactors.length == 4) {
+            let checkingTheseInputs = checkForNumber([rodLength, rodTotalLength]);
+            
+            if (withWhithSomeWithout === "withVerticalRods") {
+                if (checkingTheseInputs) {
+                    let ki = Number((0.644 + (0.148 * geometricalFactor)).toFixed(6));
+                    let kii = 1;
+                    let kh = Number((Math.sqrt(1+gridDepth)).toFixed(6));
+                    setLm(Number(((totalConductorLength) + (1.55 + 1.22 * ((rodLength)/(Math.sqrt((maximumLxLength**2)+(maximumLyLength**2)))))*rodTotalLength).toFixed(6)))
+                    let correctionFactorsHere = [ki, kii, kh];
+                    setCorrectionsFactors(correctionFactorsHere);
+                    return correctionFactorsHere
+                } else {
+                    alert("Ingrese Lr y LR. Deben ser > 0");
+                    setCorrectionsFactors();
+                }
+            } else if (withWhithSomeWithout === "withSomeVerticalRods") {
+                if (checkingTheseInputs) {
+                    const suportExponent = 2/geometricalFactor
+                    let ki = Number((0.644 + (0.148 * geometricalFactor)).toFixed(6));
+                    let kii = Number((1/(2*geometricalFactor)**suportExponent).toFixed(6));
+                    let kh = Number((Math.sqrt(1+gridDepth)).toFixed(6));
+                    setLm(Number((rodTotalLength+totalConductorLength).toFixed(2)));
+                    let correctionFactorsHere = [ki, kii, kh];
+                    setCorrectionsFactors(correctionFactorsHere);
+                    return correctionFactorsHere
+                } else {
+                    alert("Ingrese Lr y LR. Deben ser > 0");
+                    setCorrectionsFactors();
+                }
+            } else if (withWhithSomeWithout === "withoutVerticalRods") {
+                const suportExponent = 2/geometricalFactor
+                let ki = Number((0.644 + (0.148 * geometricalFactor)).toFixed(6));
+                let kii = Number((1/(2*geometricalFactor)**suportExponent).toFixed(6));
+                let kh = Number((Math.sqrt(1+gridDepth)).toFixed(6));
+                setLm(Number((totalConductorLength).toFixed(2)));
+                let correctionFactorsHere = [ki, kii, kh];
+                setCorrectionsFactors(correctionFactorsHere);
+                return correctionFactorsHere
+            }
         } else {
-            const suportExponent = 2/geometricalFactor
-            kii = (1/(2*geometricalFactor)**suportExponent).toFixed(6)
-            setLm((rodTotalLength+totalConductorLength).toFixed(2))
-        }
-        ki = (0.644 + 0.148*geometricalFactor).toFixed(6)
-        kh = parseFloat((Math.sqrt(1+(gridDepth/1))).toFixed(6))
+            alert("Antes calcule los factores de composición geometrica");
+            setCorrectionsFactors([]);
 
-        let correctionFactorsHere = [ki, kii, kh]
-        setCorrectionsFactors(correctionFactorsHere)
-        return correctionFactorsHere
+        }
     }
-    
-    async function handleKm () {
-        parseFloat(spacingParallelConductors)
         
-        let correctionFactors = await handleCorrectionFactors()
-        setKm(((1/(2*Math.PI)) * Math.log(((spacingParallelConductors**2)/(16*gridDepth*conductorDiameter)) + (((spacingParallelConductors+2*gridDepth)**2)/(8*spacingParallelConductors*conductorDiameter)) - (gridDepth/(4*conductorDiameter))) + ((correctionFactors[1])/(correctionFactors[2])) * Math.log((8/(Math.PI*(2*geometricalFactor-1))))).toFixed(6))
+    async function handleKm () {
+
+        let checkingCorrectInputss = checkForNumber([spacingParallelConductors, gridDepth, conductorDiameter, geometricalFactor, rodLength, rodTotalLength])
+        if (checkingCorrectInputss) {
+            let correctionFactors = await handleCorrectionFactors(withOrWithoutVerticalRods)
+            setKm(Number(((1/(2*Math.PI)) * Math.log(((spacingParallelConductors**2)/(16*gridDepth*conductorDiameter)) + (((spacingParallelConductors+2*gridDepth)**2)/(8*spacingParallelConductors*conductorDiameter)) - (gridDepth/(4*conductorDiameter))) + ((correctionFactors[1])/(correctionFactors[2])) * Math.log((8/(Math.PI*(2*geometricalFactor-1))))).toFixed(6)))
+        } else {
+            alert("No es posible calcular Km")
+            setKm("")
+            setCorrectionsFactors([])
+            setLm("")
+        }
     }
 
     const handleTouchVoltage = () => {
-        console.log(typeof(resistivity), km, correctionFactors[0], maximumGridCurrent)
-        setTouchVoltage(((resistivity*km*correctionFactors[0]*maximumGridCurrent)/(lm)).toFixed(2))
+        let checkingInputsIg = checkForNumber([resistivity, km, correctionFactors[0], maximumGridCurrent, lm])
+        if (checkingInputsIg) {
+            setTouchVoltage(Number(((resistivity*km*correctionFactors[0]*maximumGridCurrent)/(lm)).toFixed(2)))
+        } else {
+            alert("Chequear los valores de: resistividad, Km, Ki, Ig y LM. No se pudo calcular el Real Voltaje de Malla.")
+        }
     }
 
     const handleLsAndKs = () => {
-        setLs(((0.75*totalConductorLength)+(0.85*rodTotalLength)).toFixed(2))
-        setKs(((1/Math.PI)*((1/(2*gridDepth))+(1/(spacingParallelConductors+gridDepth))+((1/spacingParallelConductors)*(1-(0.5)**(geometricalFactor-2))))).toFixed(6))
+        setLs(Number(((0.75*totalConductorLength)+(0.85*rodTotalLength)).toFixed(2)))
+        setKs(Number((1/Math.PI)*((1/(2*gridDepth))+(1/(spacingParallelConductors+gridDepth))+((1/spacingParallelConductors)*(1-(0.5)**(geometricalFactor-2))))).toFixed(6))
     }
 
     const handleStepVoltage = () => {
-        setStepVoltage(((resistivity*ks*correctionFactors[0]*maximumGridCurrent)/(ls)).toFixed(4))
+        setStepVoltage(Number((resistivity*ks*correctionFactors[0]*maximumGridCurrent)/(ls)).toFixed(4))
     }
 
     return (
@@ -273,61 +355,41 @@ function StepContactVoltage () {
                                 <option value="otherGrid">Otras formas</option>
                             </select>
                         </div>
-                        <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label htmlFor="with_vertical_rods">Malla con barras verticales en la periferia</label>
-                            <input className={styles.s_c_v_cs_form_inp} type="checkbox" name="withVerticalRods" id="with_vertical_rods" checked={withOrWithoutVerticalRods === "withVerticalRods"} onChange={handleWithVerticalRods}/>
-                        </div>
-                        <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label htmlFor="without_vertical_rods">Malla sin barras verticales en la periferia</label>
-                            <input className={styles.s_c_v_cs_form_inp} type="checkbox" name="withoutVerticalRods" id="without_vertical_rods" checked={withOrWithoutVerticalRods === "withoutVerticalRods"} onChange={handleWithVerticalRods}/>
-                        </div>
                         <div  className={styles.s_c_v_cs_form_label_inp_container}>
                             <label className={styles.s_c_v_cs_form_label} htmlFor="">h Profundidad de la malla [m]</label>
-                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={gridDepth} onChange={handleGridDepth}/>
+                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={gridDepth} onChange={setGridDepth} placeholder="Ingrese un valor correcto"/>
                         </div>
                         <div  className={styles.s_c_v_cs_form_label_inp_container}>
                             <label className={styles.s_c_real_label} htmlFor="">D Separación entre conductores en paralelo [m]</label>
-                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={spacingParallelConductors} onChange={handleSpacingParallelConductors}/>
+                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={spacingParallelConductors} onChange={setSpacingParallelConductors}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
                             <label className={styles.s_c_real_label} htmlFor="">Dm Separación máxima entre dos puntos de la malla [m]</label>
-                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={maximumDistanceAnyTwoPoints} onChange={handleMaximumDistanceAnyTwoPoints}/>
+                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={maximumDistanceAnyTwoPoints} onChange={setMaximumDistanceAnyTwoPoints}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
                             <label className={styles.s_c_real_label} htmlFor="">d Diametro del conductor de malla [m]</label>
-                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.00001" value={conductorDiameter} onChange={handleConductorDiameter}/>
+                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.00001" value={conductorDiameter} onChange={setConductorDiameter}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
                             <label className={styles.s_c_real_label} htmlFor="">Lx Largo máximo de malla en eje "x" [m]</label>
-                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={maximumLxLength} onChange={handleMaximumLxLength}/>
+                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={maximumLxLength} onChange={setMaximumLxLength}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
                             <label className={styles.s_c_real_label} htmlFor="">Ly Largo máximo de malla en eje "y" [m]</label>
-                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={maximumLyLength} onChange={handleMaximumLyLength}/>
+                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={maximumLyLength} onChange={setMaximumLyLength}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
                             <label className={styles.s_c_real_label} htmlFor="">Lc Largo total del conductor de la malla [m]</label>
-                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={totalConductorLength} onChange={handleTotalConductorLength}/>
+                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={totalConductorLength} onChange={setTotalConductorLength}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
                             <label className={styles.s_c_real_label} htmlFor="">Lp Largo total del conductor periferico de la malla [m]</label>
-                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={perimeterConductorLength} onChange={handlePerimeterConductorLength}/>
-                        </div>
-                        <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">Lr Largo de las barras verticales [m]</label>
-                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={rodLength} onChange={handleRodLength}/>
-                        </div>
-                        <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">LR Largo total de las barras verticales [m]</label>
-                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={rodTotalLength} onChange={handleRodTotalLength}/>
+                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={perimeterConductorLength} onChange={setPerimeterConductorLength}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
                             <label className={styles.s_c_real_label} htmlFor="">Área de la malla [m2]</label>
-                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={gridArea} onChange={handleGridArea}/>
-                        </div>
-                        <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">Ig [A]</label>
-                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={maximumGridCurrent} onChange={handleMaximumGridCurrent}/>
+                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={gridArea} onChange={setGridArea}/>
                         </div>
                     </section>
                     <section className={styles.s_c_real_geometrical_parameters_container}>
@@ -358,9 +420,29 @@ function StepContactVoltage () {
                     </section>
                     <section>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
+                            <label htmlFor="with_vertical_rods">Malla con barras verticales en la periferia</label>
+                            <input className={styles.s_c_v_cs_form_inp} type="checkbox" name="withVerticalRods" id="with_vertical_rods" checked={withOrWithoutVerticalRods === "withVerticalRods"} onChange={handleVerticalRods}/>
+                        </div>
+                        <div className={styles.s_c_v_cs_form_label_inp_container}>
+                            <label htmlFor="without_vertical_rods">Malla sin barras verticales en la periferia</label>
+                            <input className={styles.s_c_v_cs_form_inp} type="checkbox" name="withSomeVerticalRods" id="without_vertical_rods" checked={withOrWithoutVerticalRods === "withSomeVerticalRods"} onChange={handleVerticalRods}/>
+                        </div>
+                        <div className={styles.s_c_v_cs_form_label_inp_container}>
+                            <label htmlFor="without_vertical_rods">Malla sin barras verticales</label>
+                            <input className={styles.s_c_v_cs_form_inp} type="checkbox" name="withoutVerticalRods" id="without_vertical_rods" checked={withOrWithoutVerticalRods === "withoutVerticalRods"} onChange={handleVerticalRods}/>
+                        </div>
+                        <div className={withOrWithoutVerticalRods === "withoutVerticalRods" ? styles.deactive : styles.s_c_v_cs_form_label_inp_container}>
+                            <label className={styles.s_c_real_label} htmlFor="">Lr Largo de las barras verticales [m]</label>
+                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={rodLength} onChange={setRodLength}/>
+                        </div>
+                        <div className={withOrWithoutVerticalRods === "withoutVerticalRods" ? styles.deactive : styles.s_c_v_cs_form_label_inp_container}>
+                            <label className={styles.s_c_real_label} htmlFor="">LR Largo total de las barras verticales [m]</label>
+                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={rodTotalLength} onChange={setRodTotalLength}/>
+                        </div>
+                        <div className={styles.s_c_v_cs_form_label_inp_container}>
                             <label className={styles.s_c_real_label} htmlFor="">Calcular factores de corrección K</label>
                             <button type="button" onClick={ () => {
-                                handleCorrectionFactors();
+                                handleCorrectionFactors(withOrWithoutVerticalRods);
                                 handleKm();
                             }}>Calcular K</button>
                         </div>
@@ -386,6 +468,10 @@ function StepContactVoltage () {
                         </div>
                     </section>
                     <section>
+                        <div className={styles.s_c_v_cs_form_label_inp_container}>
+                            <label className={styles.s_c_real_label} htmlFor="">Ig [A]</label>
+                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={maximumGridCurrent} onChange={setMaximumGridCurrent}/>
+                        </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
                             <label htmlFor="">Calcular el voltaje de malla real</label>
                             <button onClick={handleTouchVoltage}>Calcular Vc</button>

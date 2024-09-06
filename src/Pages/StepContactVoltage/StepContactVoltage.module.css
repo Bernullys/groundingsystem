@@ -58,3 +58,7 @@ button {
     display: flex;
     justify-content: space-between;
 }
+
+.deactive {
+    display: none;
+}
