@@ -1,0 +1,60 @@
+.homePage_main_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.homePage_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.homePage_title_container {
+    text-align: center;
+}
+
+.homPage_features_main_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.homPage_features_main_container ul {
+    margin: 0;
+    padding: 0;
+}
+
+.homPage_features_main_container ul li {
+    list-style: none;
+    margin: 12px 0 12px 0;
+    padding: 8px;
+    border: 1px solid black;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.homPage_features_main_container ul li:hover {
+    background-color: green;
+}
+
+.homPage_features_main_container ul li a {
+    text-decoration: none;
+    text-align: center;
+    color: black;
+}
+
+.homePage_footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: static;
+    bottom: 0px;
+}
+
+.homePage_footer p {
+    margin: 1px;
+}

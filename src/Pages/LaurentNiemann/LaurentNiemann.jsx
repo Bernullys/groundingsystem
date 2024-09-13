@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { NavLink } from "react-router-dom"
 import styles from "./LaurentNiemann.module.css"
 
 import groundingGrid from "../../assets/Images/malla_puesta_a_tierra.png"
@@ -31,12 +32,13 @@ function LaurentNiemann () {
 
     const resistanceValue = (event) => {
         event.preventDefault()
-        if (resistivity > 0 && large > 0) {
+        if (resistivity > 0 && large > 0 && width > 0 && totalLarge > 0) {
             let area = large*width;
             let equivalentRadio = piValue/area;
             setResistance(((resistivity/4)*(Math.sqrt(equivalentRadio))+(resistivity/totalLarge)).toFixed(2))
         } else {
-            setResistance("Los valores deben ser mayores a cero")
+            alert("Todos los valores deben ser mayor a cero.")
+            setResistance("")
         }
     }
 
@@ -50,25 +52,30 @@ function LaurentNiemann () {
                 <form className={styles.lau_nie_form_container} onSubmit={resistanceValue}>
                     <div className={styles.lau_nie_form_label_inp_container}>
                         <label className={styles.lau_nie_form_label} htmlFor="resistivity">Resistividad [Ohm*m]</label>
-                        <input className={styles.lau_nie_form_inp} type="number" id="resistivity" value={resistivity} onChange={handleResistivity} />
+                        <input className={styles.lau_nie_form_inp} type="number" step="0.01" id="resistivity" value={resistivity} onChange={handleResistivity} />
                     </div>
                     <div className={styles.lau_nie_form_label_inp_container}>
                         <label className={styles.lau_nie_form_label}  htmlFor="large">Largo [m]</label>
-                        <input  className={styles.lau_nie_form_inp}type="number" id="large" value={large} onChange={handleLarge}/>
+                        <input  className={styles.lau_nie_form_inp} type="number" step="0.01" id="large" value={large} onChange={handleLarge}/>
                     </div>
                     <div className={styles.lau_nie_form_label_inp_container}>
                         <label className={styles.lau_nie_form_label}  htmlFor="width">Ancho [m]</label>
-                        <input  className={styles.lau_nie_form_inp}type="number" id="width" value={width} onChange={handleWidth}/>
+                        <input  className={styles.lau_nie_form_inp} type="number" step="0.01" id="width" value={width} onChange={handleWidth}/>
                     </div>
                     <div className={styles.lau_nie_form_label_inp_container}>
                         <label className={styles.lau_nie_form_label}  htmlFor="totalLarge">Largo total del conductor [m]</label>
-                        <input  className={styles.lau_nie_form_inp}type="number" id="totalLarge" value={totalLarge} onChange={handleTotalLarge}/>
+                        <input  className={styles.lau_nie_form_inp} type="number" step="0.01" id="totalLarge" value={totalLarge} onChange={handleTotalLarge}/>
                     </div>
                     <div>
                         <button  className={styles.lau_nie_form_button}  type="submit">Calcular</button>
                     </div>
                 </form>
                 <p  className={styles.lau_nie_result_paragraph} >La Resistencia de Puesta a Tierra es: {resistance} [Ohmios]</p>
+                <p type="button" className="back_button">
+                    <NavLink to="/grounding_resistance_page">
+                        Atras
+                    </NavLink>
+                </p>
             </section>
         </section>
     )

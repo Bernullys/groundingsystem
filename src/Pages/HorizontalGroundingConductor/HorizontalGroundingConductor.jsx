@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { NavLink } from "react-router-dom"
 import styles from "./HorizontalGroundingConductor.module.css"
 
 import horizontalGroundConductor from "../../assets/Images/conductor_horizontal.png"
@@ -20,9 +21,10 @@ function HorizontalGroundingConductor () {
     const resistanceValue = (event) => {
         event.preventDefault()
         if (resistivity > 0 && large > 0) {
-            setResistance((2*resistivity/large).toFixed(2))
+            setResistance(Number((2*resistivity/large).toFixed(2)))
         } else {
-            setResistance("Los valores deben ser mayores a cero")
+            alert("Todos los valores deben ser mayor a cero.")
+            setResistance("")
         }
     }
 
@@ -36,17 +38,22 @@ function HorizontalGroundingConductor () {
                 <form className={styles.hgc_form_container} onSubmit={resistanceValue}>
                     <div className={styles.hgc_form_label_inp_container}>
                         <label className={styles.hgc_form_label} htmlFor="resistivity">Resistividad [Ohm*m]</label>
-                        <input className={styles.hgc_form_inp} type="number" id="resistivity" value={resistivity} onChange={handleResistivity} />
+                        <input className={styles.hgc_form_inp} type="number" step="0.01" id="resistivity" value={resistivity} onChange={handleResistivity} />
                     </div>
                     <div className={styles.hgc_form_label_inp_container}>
                         <label className={styles.hgc_form_label}  htmlFor="large">Largo [m]</label>
-                        <input  className={styles.hgc_form_inp}type="number" id="large" value={large} onChange={handleLarge}/>
+                        <input  className={styles.hgc_form_inp} type="number" step="0.01" id="large" value={large} onChange={handleLarge}/>
                     </div>
                     <div>
                         <button  className={styles.hgc_form_button}  type="submit">Calcular</button>
                     </div>
                 </form>
                 <p  className={styles.hgc_result_paragraph} >La Resistencia de Puesta a Tierra es: {resistance} [Ohmios]</p>
+                <p type="button" className="back_button">
+                    <NavLink to="/grounding_resistance_page">
+                        Atras
+                    </NavLink>
+                </p>
             </section>
         </section>
     )

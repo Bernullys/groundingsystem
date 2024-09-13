@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { NavLink } from "react-router-dom"
 import styles from "./Schwarz.module.css"
 
 import groundingGrid from "../../assets/Images/malla_puesta_a_tierra.png"
@@ -8,25 +9,25 @@ function Schwarz () {
     const piValue = Math.PI
     
     // grid conductors variables //
-    const [resistivity, setResistivity] = useState(0)
-    const [largerSide, setLargerSide] = useState(0)
-    const [shorterSide, setShorterSide] = useState(0)
-    const [totalLarge, setTotalLarge] = useState(0)
-    const [depth, setDepth] = useState(0)
-    const [conductorDiameter, setConductorDiameter] = useState(0)
-    const [gridResistance, setGridResistance] = useState(0)
+    const [resistivity, setResistivity] = useState()
+    const [largerSide, setLargerSide] = useState()
+    const [shorterSide, setShorterSide] = useState()
+    const [totalLarge, setTotalLarge] = useState()
+    const [depth, setDepth] = useState()
+    const [conductorDiameter, setConductorDiameter] = useState()
+    const [gridResistance, setGridResistance] = useState()
     
     // rod variables //
-    const [numberRods, setNumberRods] = useState(0)
-    const [rodLong, setRodLong] = useState(0)
-    const [rodRadio, setRodRadio] = useState(0)
-    const [rodResistance, setRodResistance] = useState(0)
+    const [numberRods, setNumberRods] = useState()
+    const [rodLong, setRodLong] = useState()
+    const [rodRadio, setRodRadio] = useState()
+    const [rodResistance, setRodResistance] = useState()
 
     // muatual resistance variables //
-    const [mutualResistance, setMutualResistance] = useState(0)
+    const [mutualResistance, setMutualResistance] = useState()
 
     // Final Resistance value
-    const [resistanceFinalValue, setResistanceFinalValue] = useState(0)
+    const [resistanceFinalValue, setResistanceFinalValue] = useState()
 
 
     // grid conductors functions //
@@ -100,7 +101,7 @@ function Schwarz () {
     const gridResistanceValue = (event) => {
         event.preventDefault()
         if (resistivity > 0 && largerSide > 0) {
-            setGridResistance(((resistivity/(piValue*totalLarge)*(Math.log(2*totalLarge/(Math.sqrt(conductorDiameter*depth)))+kOne*(totalLarge/Math.sqrt(area))-kTwo))).toFixed(2))
+            setGridResistance(Number(((resistivity/(piValue*totalLarge)*(Math.log(2*totalLarge/(Math.sqrt(conductorDiameter*depth)))+kOne*(totalLarge/Math.sqrt(area))-kTwo))).toFixed(2)))
         } else {
             setGridResistance("Los valores deben ser mayores a cero")
         }
@@ -108,21 +109,18 @@ function Schwarz () {
     
     const rodResistanceValue = (event) => {
         event.preventDefault()
-        setRodResistance(((resistivity/(2*piValue*numberRods*rodLong))*(((Math.log(4*rodLong/rodRadio)) - 1 + (2*kOne*rodLong/Math.sqrt(area)) * Math.pow((Math.sqrt(numberRods) - 1), 2)))).toFixed(2))
+        setRodResistance(Number(((resistivity/(2*piValue*numberRods*rodLong))*(((Math.log(4*rodLong/rodRadio)) - 1 + (2*kOne*rodLong/Math.sqrt(area)) * Math.pow((Math.sqrt(numberRods) - 1), 2)))).toFixed(2)))
     }
 
     const mutualResistanceValue = ()  => {
-        setMutualResistance(((resistivity/(piValue*totalLarge)) * ((Math.log(2*totalLarge/rodLong)) + (kOne*totalLarge/Math.sqrt(area)) - kTwo + 1)).toFixed(2))
+        setMutualResistance(Number(((resistivity/(piValue*totalLarge)) * ((Math.log(2*totalLarge/rodLong)) + (kOne*totalLarge/Math.sqrt(area)) - kTwo + 1)).toFixed(2)))
     }
 
     const rgValue = () => {
         const gridResistanceFloat = parseFloat(gridResistance)
         const rodResistanceFloat = parseFloat(rodResistance)
         const mutualResistanceFloat = parseFloat(mutualResistance)
-        console.log(typeof gridResistance)
-        console.log(typeof rodResistance)
-        console.log(typeof mutualResistance)
-        setResistanceFinalValue(((gridResistanceFloat*rodResistanceFloat - Math.pow(mutualResistanceFloat,2))/(gridResistanceFloat+rodResistanceFloat-2*mutualResistanceFloat)).toFixed(2))
+        setResistanceFinalValue(Number(((gridResistanceFloat*rodResistanceFloat - Math.pow(mutualResistanceFloat,2))/(gridResistanceFloat+rodResistanceFloat-2*mutualResistanceFloat)).toFixed(2)))
     }
 
     
@@ -138,19 +136,19 @@ function Schwarz () {
                     <form className={styles.schwarz_form_container} onSubmit={gridResistanceValue}>
                         <div className={styles.schwarz_form_label_inp_container}>
                             <label className={styles.schwarz_form_label} htmlFor="resistivity">Resistividad [Ohm*m]</label>
-                            <input className={styles.schwarz_form_inp} type="number" id="resistivity" value={resistivity} onChange={handleResistivity} />
+                            <input className={styles.schwarz_form_inp} type="number" step="0.01" name="resistivity" id="resistivity" value={resistivity} onChange={handleResistivity} />
                         </div>
                         <div className={styles.schwarz_form_label_inp_container}>
                             <label className={styles.schwarz_form_label}  htmlFor="larger_side">Lado mayor [m]</label>
-                            <input  className={styles.schwarz_form_inp}type="number" id="larger_side" value={largerSide} onChange={handleLargerSide}/>
+                            <input  className={styles.schwarz_form_inp}type="number" step="0.01" name="larger_side" id="larger_side" value={largerSide} onChange={handleLargerSide}/>
                         </div>
                         <div className={styles.schwarz_form_label_inp_container}>
                             <label className={styles.schwarz_form_label}  htmlFor="shorter_side">Lado menor [m]</label>
-                            <input  className={styles.schwarz_form_inp}type="number" id="shorter_side" value={shorterSide} onChange={handleShorterSide}/>
+                            <input  className={styles.schwarz_form_inp}type="number" step="0.01" name="shorter_side" id="shorter_side" value={shorterSide} onChange={handleShorterSide}/>
                         </div>
                         <div className={styles.schwarz_form_label_inp_container}>
                             <label className={styles.schwarz_form_label}  htmlFor="totalLarge">Largo total del conductor [m]</label>
-                            <input  className={styles.schwarz_form_inp}type="number" id="totalLarge" value={totalLarge} onChange={handleTotalLarge}/>
+                            <input  className={styles.schwarz_form_inp}type="number" step="0.01" name="totalLarge" id="totalLarge" value={totalLarge} onChange={handleTotalLarge}/>
                         </div>
                         <div className={styles.schwarz_form_label_inp_container}>
                             <label className={styles.schwarz_form_label} htmlFor="depth">Profundidad de malla [m]</label>
@@ -158,7 +156,7 @@ function Schwarz () {
                         </div>
                         <div className={styles.schwarz_form_label_inp_container}>
                             <label className={styles.schwarz_form_label} htmlFor="conductor_diameter">Diametro del conductor [m]</label>
-                            <input className={styles.schwarz_form_inp} type="number" step="0.001" name="conductor_diameter" id="conductor_diameter" value={conductorDiameter} onChange={handleConductorDiameter} />
+                            <input className={styles.schwarz_form_inp} type="number" step="0.000001" name="conductor_diameter" id="conductor_diameter" value={conductorDiameter} onChange={handleConductorDiameter} />
                         </div>
                         <div>
                             <button  className={styles.schwarz_form_button}  type="submit">Calcular</button>
@@ -171,15 +169,15 @@ function Schwarz () {
                     <form className={styles.schwarz_form_container} onSubmit={rodResistanceValue}>
                         <div className={styles.schwarz_form_label_inp_container}>
                             <label className={styles.schwarz_form_label} htmlFor="number_rods">Cantidad de barras</label>
-                            <input className={styles.schwarz_form_inp} type="number" id="number_rods" value={numberRods} onChange={handleRodNumber} />
+                            <input className={styles.schwarz_form_inp} type="number" step="0.01" id="number_rods" value={numberRods} onChange={handleRodNumber} />
                         </div>
                         <div className={styles.schwarz_form_label_inp_container}>
                             <label className={styles.schwarz_form_label}  htmlFor="rod_length">Largo de cada barra[m]</label>
-                            <input  className={styles.schwarz_form_inp}type="number" id="rod_length" step="0.1" value={rodLong} onChange={handleLongRod}/>
+                            <input  className={styles.schwarz_form_inp}type="number" step="0.01"  id="rod_length" value={rodLong} onChange={handleLongRod}/>
                         </div>
                         <div className={styles.schwarz_form_label_inp_container}>
                             <label className={styles.schwarz_form_label}  htmlFor="rod_radio">Radio de la barra [m]</label>
-                            <input  className={styles.schwarz_form_inp}type="number" id="rod_radio" step="0.001" value={rodRadio} onChange={handleRodRadio}/>
+                            <input  className={styles.schwarz_form_inp}type="number" step="0.000001"  id="rod_radio" value={rodRadio} onChange={handleRodRadio}/>
                         </div>
                         <div>
                             <button  className={styles.schwarz_form_button}  type="submit">Calcular</button>
@@ -201,9 +199,14 @@ function Schwarz () {
                         <div>
                             <button  className={styles.schwarz_form_button} onClick={rgValue}>Calcular</button>
                         </div>
-                    <p className={styles.schwarz_result_paragraph}>La Resistencia mutua de la malla es: {resistanceFinalValue} [Ohmios]</p>
+                    <p className={styles.schwarz_result_paragraph}>La Resistencia total de la malla es: {resistanceFinalValue} [Ohmios]</p>
                 </section>
             </section>
+                <p type="button" className="back_button">
+                    <NavLink to="/grounding_resistance_page">
+                        Atras
+                    </NavLink>
+                </p>
         </section>
     )
 }

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { NavLink } from "react-router-dom"
 import PropTypes from "prop-types"
 import styles from "./StepContactVoltage.module.css"
 
@@ -357,7 +358,7 @@ function StepContactVoltage () {
                         </div>
                         <div  className={styles.s_c_v_cs_form_label_inp_container}>
                             <label className={styles.s_c_v_cs_form_label} htmlFor="">h Profundidad de la malla [m]</label>
-                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={gridDepth} onChange={setGridDepth} placeholder="Ingrese un valor correcto"/>
+                            <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={gridDepth} onChange={setGridDepth}/>
                         </div>
                         <div  className={styles.s_c_v_cs_form_label_inp_container}>
                             <label className={styles.s_c_real_label} htmlFor="">D Separación entre conductores en paralelo [m]</label>
@@ -506,6 +507,11 @@ function StepContactVoltage () {
                         </section>
                     </section>
                 </section>
+                    <p className="back_button">
+                            <NavLink to="/">
+                                Atras
+                            </NavLink>
+                        </p>
             </section>
         </section>
     )

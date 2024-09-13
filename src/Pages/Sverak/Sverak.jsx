@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { NavLink } from "react-router-dom"
 import styles from "./Sverak.module.css"
 
 import groundingGrid from "../../assets/Images/malla_puesta_a_tierra.png"
@@ -34,11 +35,12 @@ function Sverak () {
 
     const resistanceValue = (event) => {
         event.preventDefault()
-        if (resistivity > 0 && large > 0) {
+        if (resistivity > 0 && large > 0 && width > 0 && totalLarge > 0 && depth > 0) {
             let area = large*width;
-            setResistance(((resistivity)*((1/totalLarge)+1/(Math.sqrt(20*area))*(1+1/(1+depth*Math.sqrt(20/area))))).toFixed(2))
+            setResistance(Number(((resistivity)*((1/totalLarge)+1/(Math.sqrt(20*area))*(1+1/(1+depth*Math.sqrt(20/area))))).toFixed(2)))
         } else {
-            setResistance("Los valores deben ser mayores a cero")
+            alert("Todos los valores deben ser mayores a cero.")
+            setResistance("")
         }
     }
 
@@ -52,19 +54,19 @@ function Sverak () {
                 <form className={styles.sverak_form_container} onSubmit={resistanceValue}>
                     <div className={styles.sverak_form_label_inp_container}>
                         <label className={styles.sverak_form_label} htmlFor="resistivity">Resistividad [Ohm*m]</label>
-                        <input className={styles.sverak_form_inp} type="number" id="resistivity" value={resistivity} onChange={handleResistivity} />
+                        <input className={styles.sverak_form_inp} type="number" step="0.01" id="resistivity" value={resistivity} onChange={handleResistivity} />
                     </div>
                     <div className={styles.sverak_form_label_inp_container}>
                         <label className={styles.sverak_form_label}  htmlFor="large">Largo [m]</label>
-                        <input  className={styles.sverak_form_inp}type="number" id="large" value={large} onChange={handleLarge}/>
+                        <input  className={styles.sverak_form_inp} type="number" step="0.01" id="large" value={large} onChange={handleLarge}/>
                     </div>
                     <div className={styles.sverak_form_label_inp_container}>
                         <label className={styles.sverak_form_label}  htmlFor="width">Ancho [m]</label>
-                        <input  className={styles.sverak_form_inp}type="number" id="width" value={width} onChange={handleWidth}/>
+                        <input  className={styles.sverak_form_inp} type="number" step="0.01" id="width" value={width} onChange={handleWidth}/>
                     </div>
                     <div className={styles.sverak_form_label_inp_container}>
                         <label className={styles.sverak_form_label}  htmlFor="totalLarge">Largo total del conductor [m]</label>
-                        <input  className={styles.sverak_form_inp}type="number" id="totalLarge" value={totalLarge} onChange={handleTotalLarge}/>
+                        <input  className={styles.sverak_form_inp} type="number" step="0.01" id="totalLarge" value={totalLarge} onChange={handleTotalLarge}/>
                     </div>
                     <div className={styles.sverak_form_label_inp_container}>
                         <label className={styles.sverak_form_label} htmlFor="depth">Profundidad de malla [m]</label>
@@ -75,6 +77,11 @@ function Sverak () {
                     </div>
                 </form>
                 <p  className={styles.sverak_result_paragraph} >La Resistencia de Puesta a Tierra es: {resistance} [Ohmios]</p>
+                <p type="button" className="back_button">
+                    <NavLink to="/grounding_resistance_page">
+                        Atras
+                    </NavLink>
+                </p>
             </section>
         </section>
     )

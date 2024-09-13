@@ -1,3 +1,17 @@
 body {
     margin: 0;
 }
+
+.back_button {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.back_button a {
+    text-decoration: none;
+    color: black;
+    background-color: gainsboro;
+    padding: 60%;
+    text-align: center;
+    border-radius: 16px;
+}
