@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
-import styles from "./HorizontalGroundingConductor.module.css"
+import styles from "../StylesToAllResistanceCal.module.css"
 
 import horizontalGroundConductor from "../../assets/Images/conductor_horizontal.png"
 
@@ -29,26 +29,26 @@ function HorizontalGroundingConductor () {
     }
 
     return (
-        <section className={styles.hgc_main_container}>
-            <section className={styles.hgc_title_image}>
-                <h2 className={styles.hgc_title}>Conductor desnudo enterrado horizontalmente</h2>
-                <img className={styles.hgc_image} src={horizontalGroundConductor} alt="Grounding Rod" />
+        <section className={styles.main_container}>
+            <section className={styles.title_image_container}>
+                <h2 className={styles.title}>Conductor desnudo enterrado horizontalmente</h2>
+                <img className={styles.image} src={horizontalGroundConductor} alt="Grounding Rod" />
             </section>
-            <section className={styles.hgc_form_main_container}>
-                <form className={styles.hgc_form_container} onSubmit={resistanceValue}>
-                    <div className={styles.hgc_form_label_inp_container}>
-                        <label className={styles.hgc_form_label} htmlFor="resistivity">Resistividad [Ohm*m]</label>
-                        <input className={styles.hgc_form_inp} type="number" step="0.01" id="resistivity" value={resistivity} onChange={handleResistivity} />
+            <section className={styles.form_main_container}>
+                <form className={styles.form} onSubmit={resistanceValue}>
+                    <div className={styles.form_label_inp_container}>
+                        <label className={styles.form_label} htmlFor="resistivity">Resistividad [Ohm*m]</label>
+                        <input className={styles.form_input} type="number" step="0.01" id="resistivity" value={resistivity} onChange={handleResistivity} />
                     </div>
-                    <div className={styles.hgc_form_label_inp_container}>
-                        <label className={styles.hgc_form_label}  htmlFor="large">Largo [m]</label>
-                        <input  className={styles.hgc_form_inp} type="number" step="0.01" id="large" value={large} onChange={handleLarge}/>
+                    <div className={styles.form_label_inp_container}>
+                        <label className={styles.form_label}  htmlFor="large">Largo [m]</label>
+                        <input  className={styles.form_input} type="number" step="0.01" id="large" value={large} onChange={handleLarge}/>
                     </div>
                     <div>
-                        <button  className={styles.hgc_form_button}  type="submit">Calcular</button>
+                        <button  className={styles.form_button}  type="submit">Calcular</button>
                     </div>
                 </form>
-                <p  className={styles.hgc_result_paragraph} >La Resistencia de Puesta a Tierra es: {resistance} [Ohmios]</p>
+                <h3>La Resistencia de Puesta a Tierra es: {resistance} [Ohmios]</h3>
                 <p type="button" className="back_button">
                     <NavLink to="/grounding_resistance_page">
                         Atras

@@ -1,58 +1,66 @@
-.lau_nie_main_container {
-    height: 70vh;
-    display: grid;
-    place-items: center;
-}
-
-.lau_nie_title_image {
+.main_container {
+    height: 100vh;
+    margin: 10% 0 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.lau_nie_title {
+.title_image_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.title {
 
 }
 
-.lau_nie_image {
+.image {
 
 }
 
-.lau_nie_form_main_container {
+.form_main_container {
     width: 50vw;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.lau_nie_form_container {
+/*to schwarz*/
+.form_second_container {
+
+}
+
+.subtitle {
+
+}
+
+/**/
+
+.form {
     width: 50vw;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.lau_nie_form_label_inp_container {
+.form_label_inp_container {
     display: flex;
     margin: 0 0 24px 0;
 }
 
-.lau_nie_form_label {
-    width: 12vw;
-    
+.form_label {
+    width: 10vw;
 }
 
-.lau_nie_form_inp {
+.form_input {
     width: 48px;
 }
 
-.lau_nie_form_button {
+.form_button {
     cursor: pointer;
     width: 120px;
     height: 36px;
-}
-
-.lau_nie_result_paragraph {
-    width: 30vw;
-    text-align: center;
 }

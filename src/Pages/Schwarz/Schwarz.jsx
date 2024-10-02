@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
-import styles from "./Schwarz.module.css"
+import styles from "../StylesToAllResistanceCal.module.css"
 
 import groundingGrid from "../../assets/Images/malla_puesta_a_tierra.png"
 
@@ -125,81 +125,81 @@ function Schwarz () {
 
     
     return (
-        <section className={styles.schwarz_main_container}>
-            <section className={styles.schwarz_title_image}>
-                <h2 className={styles.schwarz_title}>Malla de Puesta a Tierra - Schwarz</h2>
-                <img className={styles.schwarz_image} src={groundingGrid} alt="Grounding Rod" />
+        <section className={styles.main_container}>
+            <section className={styles.title_image_container}>
+                <h2 className={styles.title}>Malla de Puesta a Tierra - Schwarz</h2>
+                <img className={styles.image} src={groundingGrid} alt="Grounding Rod" />
             </section>
-            <section className={styles.schwarz_form_main_container}>
-                <section className={styles.schwarz_form_second_container}>
-                    <h3 className={styles.cshwarz_subtitle}>Resistencia de los conductores de la malla</h3>
-                    <form className={styles.schwarz_form_container} onSubmit={gridResistanceValue}>
-                        <div className={styles.schwarz_form_label_inp_container}>
-                            <label className={styles.schwarz_form_label} htmlFor="resistivity">Resistividad [Ohm*m]</label>
-                            <input className={styles.schwarz_form_inp} type="number" step="0.01" name="resistivity" id="resistivity" value={resistivity} onChange={handleResistivity} />
+            <section className={styles.form_main_container}>
+                <section className={styles.form_second_container}>
+                    <h3 className={styles.subtitle}>Resistencia de los conductores de la malla</h3>
+                    <form className={styles.form} onSubmit={gridResistanceValue}>
+                        <div className={styles.form_label_inp_container}>
+                            <label className={styles.form_label} htmlFor="resistivity">Resistividad [Ohm*m]</label>
+                            <input className={styles.form_input} type="number" step="0.01" name="resistivity" id="resistivity" value={resistivity} onChange={handleResistivity} />
                         </div>
-                        <div className={styles.schwarz_form_label_inp_container}>
-                            <label className={styles.schwarz_form_label}  htmlFor="larger_side">Lado mayor [m]</label>
-                            <input  className={styles.schwarz_form_inp}type="number" step="0.01" name="larger_side" id="larger_side" value={largerSide} onChange={handleLargerSide}/>
+                        <div className={styles.form_label_inp_container}>
+                            <label className={styles.form_label}  htmlFor="larger_side">Lado mayor [m]</label>
+                            <input  className={styles.form_input}type="number" step="0.01" name="larger_side" id="larger_side" value={largerSide} onChange={handleLargerSide}/>
                         </div>
-                        <div className={styles.schwarz_form_label_inp_container}>
-                            <label className={styles.schwarz_form_label}  htmlFor="shorter_side">Lado menor [m]</label>
-                            <input  className={styles.schwarz_form_inp}type="number" step="0.01" name="shorter_side" id="shorter_side" value={shorterSide} onChange={handleShorterSide}/>
+                        <div className={styles.form_label_inp_container}>
+                            <label className={styles.form_label}  htmlFor="shorter_side">Lado menor [m]</label>
+                            <input  className={styles.form_input}type="number" step="0.01" name="shorter_side" id="shorter_side" value={shorterSide} onChange={handleShorterSide}/>
                         </div>
-                        <div className={styles.schwarz_form_label_inp_container}>
-                            <label className={styles.schwarz_form_label}  htmlFor="totalLarge">Largo total del conductor [m]</label>
-                            <input  className={styles.schwarz_form_inp}type="number" step="0.01" name="totalLarge" id="totalLarge" value={totalLarge} onChange={handleTotalLarge}/>
+                        <div className={styles.form_label_inp_container}>
+                            <label className={styles.form_label}  htmlFor="totalLarge">Largo total del conductor [m]</label>
+                            <input  className={styles.form_input}type="number" step="0.01" name="totalLarge" id="totalLarge" value={totalLarge} onChange={handleTotalLarge}/>
                         </div>
-                        <div className={styles.schwarz_form_label_inp_container}>
-                            <label className={styles.schwarz_form_label} htmlFor="depth">Profundidad de malla [m]</label>
-                            <input className={styles.schwarz_form_inp} type="number" step="0.01" name="depth" id="depth" value={depth} onChange={handleDepth} />
+                        <div className={styles.form_label_inp_container}>
+                            <label className={styles.form_label} htmlFor="depth">Profundidad de malla [m]</label>
+                            <input className={styles.form_input} type="number" step="0.01" name="depth" id="depth" value={depth} onChange={handleDepth} />
                         </div>
-                        <div className={styles.schwarz_form_label_inp_container}>
-                            <label className={styles.schwarz_form_label} htmlFor="conductor_diameter">Diametro del conductor [m]</label>
-                            <input className={styles.schwarz_form_inp} type="number" step="0.000001" name="conductor_diameter" id="conductor_diameter" value={conductorDiameter} onChange={handleConductorDiameter} />
+                        <div className={styles.form_label_inp_container}>
+                            <label className={styles.form_label} htmlFor="conductor_diameter">Diametro del conductor [m]</label>
+                            <input className={styles.form_input} type="number" step="0.000001" name="conductor_diameter" id="conductor_diameter" value={conductorDiameter} onChange={handleConductorDiameter} />
                         </div>
                         <div>
-                            <button  className={styles.schwarz_form_button}  type="submit">Calcular</button>
+                            <button  className={styles.form_button}  type="submit">Calcular</button>
                         </div>
                     </form>
-                    <p className={styles.schwarz_result_paragraph}>La Resistencia de los conductores de la malla es: {gridResistance}  [Ohmios]</p>
+                    <h3>La Resistencia de los conductores de la malla es: {gridResistance}  [Ohmios]</h3>
                 </section>
-                <section className={styles.schwarz_form_second_container}>
-                    <h3 className={styles.cshwarz_subtitle}>Resistencia de las barras de la malla</h3>
-                    <form className={styles.schwarz_form_container} onSubmit={rodResistanceValue}>
-                        <div className={styles.schwarz_form_label_inp_container}>
-                            <label className={styles.schwarz_form_label} htmlFor="number_rods">Cantidad de barras</label>
-                            <input className={styles.schwarz_form_inp} type="number" step="0.01" id="number_rods" value={numberRods} onChange={handleRodNumber} />
+                <section className={styles.form_second_container}>
+                    <h3 className={styles.subtitle}>Resistencia de las barras de la malla</h3>
+                    <form className={styles.form} onSubmit={rodResistanceValue}>
+                        <div className={styles.form_label_inp_container}>
+                            <label className={styles.form_label} htmlFor="number_rods">Cantidad de barras</label>
+                            <input className={styles.form_input} type="number" step="0.01" id="number_rods" value={numberRods} onChange={handleRodNumber} />
                         </div>
-                        <div className={styles.schwarz_form_label_inp_container}>
-                            <label className={styles.schwarz_form_label}  htmlFor="rod_length">Largo de cada barra[m]</label>
-                            <input  className={styles.schwarz_form_inp}type="number" step="0.01"  id="rod_length" value={rodLong} onChange={handleLongRod}/>
+                        <div className={styles.form_label_inp_container}>
+                            <label className={styles.form_label}  htmlFor="rod_length">Largo de cada barra[m]</label>
+                            <input  className={styles.form_input}type="number" step="0.01"  id="rod_length" value={rodLong} onChange={handleLongRod}/>
                         </div>
-                        <div className={styles.schwarz_form_label_inp_container}>
-                            <label className={styles.schwarz_form_label}  htmlFor="rod_radio">Radio de la barra [m]</label>
-                            <input  className={styles.schwarz_form_inp}type="number" step="0.000001"  id="rod_radio" value={rodRadio} onChange={handleRodRadio}/>
+                        <div className={styles.form_label_inp_container}>
+                            <label className={styles.form_label}  htmlFor="rod_radio">Radio de la barra [m]</label>
+                            <input  className={styles.form_input}type="number" step="0.000001"  id="rod_radio" value={rodRadio} onChange={handleRodRadio}/>
                         </div>
                         <div>
-                            <button  className={styles.schwarz_form_button}  type="submit">Calcular</button>
+                            <button  className={styles.form_button}  type="submit">Calcular</button>
                         </div>
                     </form>
-                    <p className={styles.schwarz_result_paragraph}>La Resistencia de las barras de la malla es: {rodResistance} [Ohmios]</p>
+                    <h3>La Resistencia de las barras de la malla es: {rodResistance} [Ohmios]</h3>
                 </section>
             </section>
-            <section className={styles.schwarz_form_main_container}>
-                <section className={styles.schwarz_form_second_container}>
-                    <h3 className={styles.cshwarz_subtitle}>Resistencia mutua de la malla</h3>
+            <section className={styles.form_main_container}>
+                <section className={styles.form_second_container}>
+                    <h3 className={styles.subtitle}>Resistencia mutua de la malla</h3>
                         <div>
-                            <button className={styles.schwarz_form_button} onClick={mutualResistanceValue} >Calcular</button>
+                            <button className={styles.form_button} onClick={mutualResistanceValue} >Calcular</button>
                         </div>
-                    <p className={styles.schwarz_result_paragraph}>La Resistencia mutua de la malla es: {mutualResistance} [Ohmios]</p>
+                    <h3>La Resistencia mutua de la malla es: {mutualResistance} [Ohmios]</h3>
                 </section>
-                <section className={styles.schwarz_form_second_container}>
-                    <h3 className={styles.cshwarz_subtitle}>Resistencia de la Malla</h3>
+                <section className={styles.form_second_container}>
+                    <h3 className={styles.subtitle}>Resistencia de la Malla</h3>
                         <div>
-                            <button  className={styles.schwarz_form_button} onClick={rgValue}>Calcular</button>
+                            <button  className={styles.form_button} onClick={rgValue}>Calcular</button>
                         </div>
-                    <p className={styles.schwarz_result_paragraph}>La Resistencia total de la malla es: {resistanceFinalValue} [Ohmios]</p>
+                    <h3>La Resistencia total de la malla es: {resistanceFinalValue} [Ohmios]</h3>
                 </section>
             </section>
                 <p type="button" className="back_button">

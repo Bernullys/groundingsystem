@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
-import styles from "./Sverak.module.css"
+import styles from "../StylesToAllResistanceCal.module.css"
 
 import groundingGrid from "../../assets/Images/malla_puesta_a_tierra.png"
 
@@ -45,38 +45,38 @@ function Sverak () {
     }
 
     return (
-        <section className={styles.sverak_main_container}>
-            <section className={styles.sverak_title_image}>
-                <h2 className={styles.sverak_title}>Malla de Puesta a Tierra - Sverak</h2>
-                <img className={styles.sverak_image} src={groundingGrid} alt="Grounding Rod" />
+        <section className={styles.main_container}>
+            <section className={styles.title_image_container}>
+                <h2 className={styles.title}>Malla de Puesta a Tierra - Sverak</h2>
+                <img className={styles.image} src={groundingGrid} alt="Grounding Rod" />
             </section>
-            <section className={styles.sverak_form_main_container}>
-                <form className={styles.sverak_form_container} onSubmit={resistanceValue}>
-                    <div className={styles.sverak_form_label_inp_container}>
-                        <label className={styles.sverak_form_label} htmlFor="resistivity">Resistividad [Ohm*m]</label>
-                        <input className={styles.sverak_form_inp} type="number" step="0.01" id="resistivity" value={resistivity} onChange={handleResistivity} />
+            <section className={styles.form_main_container}>
+                <form className={styles.form} onSubmit={resistanceValue}>
+                    <div className={styles.form_label_inp_container}>
+                        <label className={styles.form_label} htmlFor="resistivity">Resistividad [Ohm*m]</label>
+                        <input className={styles.form_input} type="number" step="0.01" id="resistivity" value={resistivity} onChange={handleResistivity} />
                     </div>
-                    <div className={styles.sverak_form_label_inp_container}>
-                        <label className={styles.sverak_form_label}  htmlFor="large">Largo [m]</label>
-                        <input  className={styles.sverak_form_inp} type="number" step="0.01" id="large" value={large} onChange={handleLarge}/>
+                    <div className={styles.form_label_inp_container}>
+                        <label className={styles.form_label}  htmlFor="large">Largo [m]</label>
+                        <input  className={styles.form_input} type="number" step="0.01" id="large" value={large} onChange={handleLarge}/>
                     </div>
-                    <div className={styles.sverak_form_label_inp_container}>
-                        <label className={styles.sverak_form_label}  htmlFor="width">Ancho [m]</label>
-                        <input  className={styles.sverak_form_inp} type="number" step="0.01" id="width" value={width} onChange={handleWidth}/>
+                    <div className={styles.form_label_inp_container}>
+                        <label className={styles.form_label}  htmlFor="width">Ancho [m]</label>
+                        <input  className={styles.form_input} type="number" step="0.01" id="width" value={width} onChange={handleWidth}/>
                     </div>
-                    <div className={styles.sverak_form_label_inp_container}>
-                        <label className={styles.sverak_form_label}  htmlFor="totalLarge">Largo total del conductor [m]</label>
-                        <input  className={styles.sverak_form_inp} type="number" step="0.01" id="totalLarge" value={totalLarge} onChange={handleTotalLarge}/>
+                    <div className={styles.form_label_inp_container}>
+                        <label className={styles.form_label}  htmlFor="totalLarge">Largo total del conductor [m]</label>
+                        <input  className={styles.form_input} type="number" step="0.01" id="totalLarge" value={totalLarge} onChange={handleTotalLarge}/>
                     </div>
-                    <div className={styles.sverak_form_label_inp_container}>
-                        <label className={styles.sverak_form_label} htmlFor="depth">Profundidad de malla [m]</label>
-                        <input className={styles.sverak_form_inp} type="number" step="0.01" name="depth" id="depth" value={depth} onChange={handleDepth} />
+                    <div className={styles.form_label_inp_container}>
+                        <label className={styles.form_label} htmlFor="depth">Profundidad de malla [m]</label>
+                        <input className={styles.form_input} type="number" step="0.01" name="depth" id="depth" value={depth} onChange={handleDepth} />
                     </div>
                     <div>
-                        <button  className={styles.sverak_form_button}  type="submit">Calcular</button>
+                        <button  className={styles.form_button}  type="submit">Calcular</button>
                     </div>
                 </form>
-                <p  className={styles.sverak_result_paragraph} >La Resistencia de Puesta a Tierra es: {resistance} [Ohmios]</p>
+                <h3>La Resistencia de Puesta a Tierra es: {resistance} [Ohmios]</h3>
                 <p type="button" className="back_button">
                     <NavLink to="/grounding_resistance_page">
                         Atras

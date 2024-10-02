@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { NavLink } from "react-router-dom";
-import styles from "./BuriedPlate.module.css"
+
+import styles from "../StylesToAllResistanceCal.module.css"
 
 //Images//
 import buried_plate_image from "../../assets/Images/placa_puesta_a_tierra.png"
@@ -38,27 +39,27 @@ function BuriedPlate () {
     }
 
     return (
-        <section id="buried_plates" className={styles.buried_plates_main_container}>
-            <section className={styles.buried_plate_title_image_container}>
-                <h2 className={styles.buried_plate_title}>Placa enterrada</h2>
-                <img className={styles.buried_plate_image} src={buried_plate_image} alt="Buried plate" />
+        <section id="buried_plates" className={styles.main_container}>
+            <section className={styles.title_image_container}>
+                <h2 className={styles.title}>Placa enterrada</h2>
+                <img className={styles.image} src={buried_plate_image} alt="Buried plate" />
             </section>
-            <section className={styles.buried_plate_form_main_container}>
-                <form onSubmit={handleSubmit} className={styles.buried_plate_form}>
-                    <div className={styles.buried_plate_form_label_inp_container}>
-                        <label className={styles.buried_plate_form_label} htmlFor="resistivity">Resistividad [Ohm*m]</label>
-                        <input className={styles.buried_plate_form_input} type="number" step="0.01" name="resistivity" id="resistivity" value={resistivity} onChange={handleResistivityChange}/>
+            <section className={styles.form_main_container}>
+                <form onSubmit={handleSubmit} className={styles.form}>
+                    <div className={styles.form_label_inp_container}>
+                        <label className={styles.form_label} htmlFor="resistivity">Resistividad [Ohm*m]</label>
+                        <input className={styles.form_input} type="number" step="0.01" name="resistivity" id="resistivity" value={resistivity} onChange={handleResistivityChange}/>
                     </div>
-                    <div className={styles.buried_plate_form_label_inp_container}>
-                        <label className={styles.buried_plate_form_label} htmlFor="large">Largo [m]</label>
-                        <input className={styles.buried_plate_form_input} type="number" step="0.01" id="large" value={large} onChange={handleLargeChange}/>
+                    <div className={styles.form_label_inp_container}>
+                        <label className={styles.form_label} htmlFor="large">Largo [m]</label>
+                        <input className={styles.form_input} type="number" step="0.01" id="large" value={large} onChange={handleLargeChange}/>
                     </div>
-                    <div className={styles.buried_plate_form_label_inp_container}>
-                        <label className={styles.buried_plate_form_label} htmlFor="width">Ancho [m]</label>
-                        <input className={styles.buried_plate_form_input} type="number" step="0.01" id="width" value={width} onChange={handleWidthChange}/>
+                    <div className={styles.form_label_inp_container}>
+                        <label className={styles.form_label} htmlFor="width">Ancho [m]</label>
+                        <input className={styles.form_input} type="number" step="0.01" id="width" value={width} onChange={handleWidthChange}/>
                     </div>
                     <div>
-                        <button className={styles.buried_plate_form_button} type="submit">Calcular</button>
+                        <button className={styles.form_button} type="submit">Calcular</button>
                     </div>
                 </form>
                 <h3>Resistencia de Puesta a Tierra: {resistance}</h3>
