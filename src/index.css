@@ -2,16 +2,22 @@ body {
     margin: 0;
 }
 
+#root {
+    margin: 0;
+}
+
 .back_button {
     margin-top: 24px;
     text-align: center;
+    width: 120px;
+    height: 24px;
 }
 
 .back_button a {
     text-decoration: none;
     color: black;
     background-color: gainsboro;
-    padding: 60%;
+    padding: 14px;
     text-align: center;
     border-radius: 16px;
 }

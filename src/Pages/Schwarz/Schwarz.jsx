@@ -162,7 +162,7 @@ function Schwarz () {
                             <button  className={styles.form_button}  type="submit">Calcular</button>
                         </div>
                     </form>
-                    <h3>La Resistencia de los conductores de la malla es: {gridResistance}  [Ohmios]</h3>
+                    <h3>La Resistencia de los conductores de la malla [Ohm]: {gridResistance}</h3>
                 </section>
                 <section className={styles.form_second_container}>
                     <h3 className={styles.subtitle}>Resistencia de las barras de la malla</h3>
@@ -183,7 +183,7 @@ function Schwarz () {
                             <button  className={styles.form_button}  type="submit">Calcular</button>
                         </div>
                     </form>
-                    <h3>La Resistencia de las barras de la malla es: {rodResistance} [Ohmios]</h3>
+                    <h3>La Resistencia de las barras de la malla [Ohm]: {rodResistance}</h3>
                 </section>
             </section>
             <section className={styles.form_main_container}>
@@ -192,14 +192,14 @@ function Schwarz () {
                         <div>
                             <button className={styles.form_button} onClick={mutualResistanceValue} >Calcular</button>
                         </div>
-                    <h3>La Resistencia mutua de la malla es: {mutualResistance} [Ohmios]</h3>
+                    <h3>La Resistencia mutua de la malla [Ohm]: {mutualResistance}</h3>
                 </section>
                 <section className={styles.form_second_container}>
                     <h3 className={styles.subtitle}>Resistencia de la Malla</h3>
                         <div>
                             <button  className={styles.form_button} onClick={rgValue}>Calcular</button>
                         </div>
-                    <h3>La Resistencia total de la malla es: {resistanceFinalValue} [Ohmios]</h3>
+                    <h3>La Resistencia total de la malla [Ohm]: {resistanceFinalValue}</h3>
                 </section>
             </section>
                 <p type="button" className="back_button">

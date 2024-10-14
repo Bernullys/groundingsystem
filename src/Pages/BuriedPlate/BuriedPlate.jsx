@@ -62,7 +62,7 @@ function BuriedPlate () {
                         <button className={styles.form_button} type="submit">Calcular</button>
                     </div>
                 </form>
-                <h3>Resistencia de Puesta a Tierra: {resistance}</h3>
+                <h3>Resistencia de Puesta a Tierra [Ohm]: {resistance}</h3>
                 <p type="button" className="back_button">
                     <NavLink to="/grounding_resistance_page">
                         Atras

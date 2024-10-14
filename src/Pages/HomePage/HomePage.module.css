@@ -3,6 +3,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 0;
+    padding: 0;
 }
 
 .homePage_container {
@@ -10,11 +12,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
     height: 100vh;
 }
 
 .homePage_title_container {
     text-align: center;
+    margin: 0;
 }
 
 .homPage_features_main_container {
@@ -24,6 +28,10 @@
 }
 
 .homPage_features_main_container ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin: 0;
     padding: 0;
 }
@@ -31,10 +39,10 @@
 .homPage_features_main_container ul li {
     list-style: none;
     margin: 12px 0 12px 0;
-    padding: 8px;
     border: 1px solid black;
     border-radius: 8px;
     text-align: center;
+    padding: 0;
 }
 
 .homPage_features_main_container ul li:hover {
@@ -42,19 +50,44 @@
 }
 
 .homPage_features_main_container ul li a {
+    display: block;
+    width: auto;
+    height: 100%;
+    padding: 8px;
     text-decoration: none;
     text-align: center;
     color: black;
+}
+
+.ee_image {
+    width: 100%;
 }
 
 .homePage_footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: static;
+    justify-content: center;
     bottom: 0px;
+    width: 90vw;
 }
 
 .homePage_footer p {
-    margin: 1px;
+    margin: 5px 0 5px 0;
+}
+
+@media(max-width: 250px) {
+    .homPage_features_main_container ul,
+    .homPage_features_main_container ul li a {
+        width: 70vw;
+    }
+}
+
+@media(max-width: 180px) {
+    .homPage_features_main_container ul li a {
+        font-size: 14px;
+    }
+    .homePage_footer p {
+        font-size: 12px;
+    }
 }
