@@ -7,6 +7,16 @@ import groundingGrid from "../../assets/Images/malla_puesta_a_tierra.png"
 function Schwarz () {
     
     const piValue = Math.PI
+
+    // handle positive and digit numbers //
+
+    const getPositiveNumber = (arrayOfValues) => {
+        if (arrayOfValues.every(item => typeof item === 'number' && item > 0)) {
+            return true
+        } else {
+            return false
+        }
+    }
     
     // grid conductors variables //
     const [resistivity, setResistivity] = useState()
@@ -32,42 +42,42 @@ function Schwarz () {
 
     // grid conductors functions //
     const handleResistivity = (event) => {
-        setResistivity(event.target.value)
+        setResistivity(parseFloat(event.target.value))
     }
 
     const handleLargerSide = (event) => {
-        setLargerSide(event.target.value)
+        setLargerSide(parseFloat(event.target.value))
     }
 
     const handleShorterSide = (event) => {
-        setShorterSide(event.target.value)
+        setShorterSide(parseFloat(event.target.value))
     }
     
     const handleTotalLarge = (event) => {
-        setTotalLarge(event.target.value)
+        setTotalLarge(parseFloat(event.target.value))
     }
     
     const handleDepth = (event) => {
-        setDepth(event.target.value)
+        setDepth(parseFloat(event.target.value))
     }
     
     const handleConductorDiameter = (event) => {
-        setConductorDiameter(event.target.value)
+        setConductorDiameter(parseFloat(event.target.value))
     }
     
     
     // rod functions //
     
     const handleRodNumber = (event) => {
-        setNumberRods(event.target.value)
+        setNumberRods(parseFloat(event.target.value))
     }
     
     const handleLongRod = (event) => {
-        setRodLong(event.target.value)
+        setRodLong(parseFloat(event.target.value))
     }
 
     const handleRodRadio = (event) => {
-        setRodRadio(event.target.value)
+        setRodRadio(parseFloat(event.target.value))
     }
     
     // Genral variables //
@@ -93,36 +103,50 @@ function Schwarz () {
         kOne = (1.43 - (depth/sqRootArea) - 0.044*(largerSide/shorterSide))
         kTwo = (5.5 - (8*depth/sqRootArea) + (0.15 - depth/sqRootArea) * largerSide/shorterSide)
     }
-    
-    console.log(kOne, kTwo)
+
     
     // Resistance functions //
 
     const gridResistanceValue = (event) => {
         event.preventDefault()
-        if (resistivity > 0 && largerSide > 0) {
+        if (getPositiveNumber([resistivity, piValue, totalLarge, conductorDiameter, depth, totalLarge, area])) {
             setGridResistance(Number(((resistivity/(piValue*totalLarge)*(Math.log(2*totalLarge/(Math.sqrt(conductorDiameter*depth)))+kOne*(totalLarge/Math.sqrt(area))-kTwo))).toFixed(2)))
         } else {
-            setGridResistance("Los valores deben ser mayores a cero")
+            alert("Todos los valores deben ser mayor a cero.")
+            setGridResistance("")
         }
     }
     
     const rodResistanceValue = (event) => {
         event.preventDefault()
-        setRodResistance(Number(((resistivity/(2*piValue*numberRods*rodLong))*(((Math.log(4*rodLong/rodRadio)) - 1 + (2*kOne*rodLong/Math.sqrt(area)) * Math.pow((Math.sqrt(numberRods) - 1), 2)))).toFixed(2)))
+        if (getPositiveNumber([resistivity, piValue, numberRods, rodLong, rodRadio, area])) {
+            setRodResistance(Number(((resistivity/(2*piValue*numberRods*rodLong))*(((Math.log(4*rodLong/rodRadio)) - 1 + (2*kOne*rodLong/Math.sqrt(area)) * Math.pow((Math.sqrt(numberRods) - 1), 2)))).toFixed(2)))
+        } else {
+            alert("Todos los valores deben ser mayor a cero.")
+            setRodResistance("")
+        }
     }
 
     const mutualResistanceValue = ()  => {
-        setMutualResistance(Number(((resistivity/(piValue*totalLarge)) * ((Math.log(2*totalLarge/rodLong)) + (kOne*totalLarge/Math.sqrt(area)) - kTwo + 1)).toFixed(2)))
+        if (gridResistance && rodResistance) {
+            setMutualResistance(Number(((resistivity/(piValue*totalLarge)) * ((Math.log(2*totalLarge/rodLong)) + (kOne*totalLarge/Math.sqrt(area)) - kTwo + 1)).toFixed(2)))
+        } else {
+            alert("Calcule la resistencia de los conductores y las barras de la malla.")
+            setMutualResistance("")
+        }
     }
 
     const rgValue = () => {
         const gridResistanceFloat = parseFloat(gridResistance)
         const rodResistanceFloat = parseFloat(rodResistance)
         const mutualResistanceFloat = parseFloat(mutualResistance)
-        setResistanceFinalValue(Number(((gridResistanceFloat*rodResistanceFloat - Math.pow(mutualResistanceFloat,2))/(gridResistanceFloat+rodResistanceFloat-2*mutualResistanceFloat)).toFixed(2)))
+        if (gridResistance && rodResistance && mutualResistance) {
+            setResistanceFinalValue(Number(((gridResistanceFloat*rodResistanceFloat - Math.pow(mutualResistanceFloat,2))/(gridResistanceFloat+rodResistanceFloat-2*mutualResistanceFloat)).toFixed(2)))
+        } else {
+            alert("Calcule todos los valores de resistencia anteriores.")
+            setResistanceFinalValue("")
+        }
     }
-
     
     return (
         <section className={styles.main_container}>

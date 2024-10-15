@@ -38,25 +38,24 @@
 
 .homPage_features_main_container ul li {
     list-style: none;
-    margin: 12px 0 12px 0;
-    border: 1px solid black;
-    border-radius: 8px;
     text-align: center;
-    padding: 0;
+
 }
 
-.homPage_features_main_container ul li:hover {
-    background-color: green;
-}
 
 .homPage_features_main_container ul li a {
     display: block;
-    width: auto;
-    height: 100%;
-    padding: 8px;
     text-decoration: none;
-    text-align: center;
     color: black;
+    margin: 12px 0 12px 0;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.homPage_features_main_container ul li a:hover {
+    background-color: green;
 }
 
 .ee_image {

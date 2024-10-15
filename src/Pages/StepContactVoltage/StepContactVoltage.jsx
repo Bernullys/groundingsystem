@@ -107,8 +107,8 @@ function StepContactVoltage () {
             const csValue = Number((1 - ((0.09 * (1 - resistivity/sResistivity))/(2 * hs + (0.09)))).toFixed(4))
             setCs(csValue)
         } else {
-            alert("Todos los valores deben ser mayores a cero")
-            setCs(Number())
+            alert("Todos los valores deben ser mayores a cero.")
+            setCs("")
         }
     }
 
@@ -122,7 +122,7 @@ function StepContactVoltage () {
             const touch70 = Number(((1000 + 1.5 * cs * sResistivity) * 0.157/Math.sqrt(ts)).toFixed(4))
             setStepsAndTouchVoltages([step50, step70, touch50, touch70])
         } else {
-            alert("Debes calcular Cs e ingresar ts. Todos los valores deben ser > 0");
+            alert("Debes calcular Cs e ingresar ts. Todos los valores deben ser > 0.");
             setStepsAndTouchVoltages([])
         }
     }
@@ -224,7 +224,7 @@ function StepContactVoltage () {
                     setCorrectionsFactors(correctionFactorsHere);
                     return correctionFactorsHere
                 } else {
-                    alert("Ingrese Lr y LR. Deben ser > 0");
+                    alert("Ingrese Lr y LR. Deben ser > 0.");
                     setCorrectionsFactors();
                 }
             } else if (withWhithSomeWithout === "withSomeVerticalRods") {
@@ -238,7 +238,7 @@ function StepContactVoltage () {
                     setCorrectionsFactors(correctionFactorsHere);
                     return correctionFactorsHere
                 } else {
-                    alert("Ingrese Lr y LR. Deben ser > 0");
+                    alert("Ingrese Lr y LR. Deben ser > 0.");
                     setCorrectionsFactors();
                 }
             } else if (withWhithSomeWithout === "withoutVerticalRods") {
@@ -252,7 +252,7 @@ function StepContactVoltage () {
                 return correctionFactorsHere
             }
         } else {
-            alert("Antes calcule los factores de composición geometrica");
+            alert("Antes calcule los factores de composición geometrica.");
             setCorrectionsFactors([]);
 
         }
@@ -282,12 +282,24 @@ function StepContactVoltage () {
     }
 
     const handleLsAndKs = () => {
-        setLs(Number(((0.75*totalConductorLength)+(0.85*rodTotalLength)).toFixed(2)))
-        setKs(Number((1/Math.PI)*((1/(2*gridDepth))+(1/(spacingParallelConductors+gridDepth))+((1/spacingParallelConductors)*(1-(0.5)**(geometricalFactor-2))))).toFixed(6))
+        let checkingInputLsKs = checkForNumber([totalConductorLength, rodTotalLength, gridDepth, spacingParallelConductors, geometricalFactor])
+        if (checkingInputLsKs) {
+            setLs(Number(((0.75*totalConductorLength)+(0.85*rodTotalLength)).toFixed(2)))
+            setKs(Number((1/Math.PI)*((1/(2*gridDepth))+(1/(spacingParallelConductors+gridDepth))+((1/spacingParallelConductors)*(1-(0.5)**(geometricalFactor-2))))).toFixed(6))
+        } else {
+            alert("Chequear los valores de: largo total de conductores y barras de malla, profundidad de la malla, separación entre conductores, n, entre otros.")
+            setLs("")
+            setKs("")
+        }
     }
 
     const handleStepVoltage = () => {
-        setStepVoltage(Number((resistivity*ks*correctionFactors[0]*maximumGridCurrent)/(ls)).toFixed(4))
+        if (ls && ks) {
+            setStepVoltage(Number((resistivity*ks*correctionFactors[0]*maximumGridCurrent)/(ls)).toFixed(4))
+        } else {
+            alert("Antes calcule Ls y Ks.")
+            setStepVoltage("")
+        }
     }
 
     return (
