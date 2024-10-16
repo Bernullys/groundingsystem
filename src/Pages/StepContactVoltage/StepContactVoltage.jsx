@@ -311,17 +311,17 @@ function StepContactVoltage () {
             <section className={styles.s_c_v_section_container} >
                 <form onSubmit={csValue}>
                     <h3 className={styles.s_c_v_cs_form_subtitle}>Factor de corección Cs</h3>
-                    <p>En caso de que no exista capa superficial protectora, las resistividades son iguales y Cs será igual a 1</p>
+                    <p className={styles.s_c_v_paragraph}>En caso de que no exista capa superficial protectora, las resistividades son iguales y Cs será igual a 1</p>
                     <div className={styles.s_c_v_cs_form_label_inp_container}>
-                        <label htmlFor="hsInput"  className={styles.s_c_v_cs_form_label}>Espesor de la capa de material de alta resistividad colocado sobre el terreno [m]</label>
+                        <label htmlFor="hsInput"  className={styles.form_label}>Espesor de la capa de material de alta resistividad colocado sobre el terreno [m]</label>
                         <input className={styles.s_c_v_cs_form_inp} type="number" name="hsInput" id="hsInput" step="0.01" value={hs} onChange={handleHs}/>
                     </div>
                     <div className={styles.s_c_v_cs_form_label_inp_container}>
-                        <label htmlFor="RoSInput"  className={styles.s_c_v_cs_form_label}>Resistividad de la capa del material colocado sobre el terreno [Ohm*m]</label>
+                        <label htmlFor="RoSInput"  className={styles.form_label}>Resistividad de la capa del material colocado sobre el terreno [Ohm*m]</label>
                         <input  className={styles.s_c_v_cs_form_inp} type="number" name="RoSInput" id="RoSInput" step="0.01" value={sResistivity} onChange={handleSResistivity}/>
                     </div>
                     <div className={styles.s_c_v_cs_form_label_inp_container}>
-                        <label htmlFor="RoEquInput" className={styles.s_c_v_cs_form_label}>Resistividad del terreno [Ohm*m]</label>
+                        <label htmlFor="RoEquInput" className={styles.form_label}>Resistividad del terreno [Ohm*m]</label>
                         <input  className={styles.s_c_v_cs_form_inp} type="number" name="RoEquInput" id="RoEquInput" step="0.01" value={resistivity} onChange={handleResistivity}/>
                     </div>
                     <div className={styles.s_c_v_cs_form_label_inp_container}>
@@ -331,10 +331,10 @@ function StepContactVoltage () {
                 </form>
             </section>
             <section className={styles.s_c_v_section_container}>
-                <section>
+                <section className={styles.s_c_v_section_sub_container}>
                     <h3 className={styles.s_c_v_cs_form_subtitle}>Voltajes de paso y contacto para personas de 50 kg y 70 kg</h3>
                     <div className={styles.s_c_v_cs_form_label_inp_container}>
-                        <label className={styles.s_c_v_cs_form_label} htmlFor="tsInput">Tiempo de falla [s]</label>
+                        <label className={styles.form_label} htmlFor="tsInput">Tiempo de falla [s]</label>
                         <input className={styles.s_c_v_cs_form_inp} type="number" name="tsInput" id="tsInput" step="0.01" value={ts} onChange={handleTs}/>
                     </div>
                     <button onClick={stepContactVoltages}>Calcular Vp y Vs</button>
@@ -357,7 +357,7 @@ function StepContactVoltage () {
                 </section>
             </section>
             <section className={styles.s_c_v_section_container}>
-                <section>
+                <section className={styles.s_c_v_section_sub_container}>
                     <h3 className={styles.s_c_v_cs_form_subtitle}>Calculo de Voltajes reales de la malla de puesta a tierra</h3>
                     <section className={styles.s_c_real_selections_container}>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
@@ -369,45 +369,45 @@ function StepContactVoltage () {
                             </select>
                         </div>
                         <div  className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_v_cs_form_label} htmlFor="">h Profundidad de la malla [m]</label>
+                            <label className={styles.form_label} htmlFor="">h Profundidad de la malla [m]</label>
                             <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={gridDepth} onChange={setGridDepth}/>
                         </div>
                         <div  className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">D Separación entre conductores en paralelo [m]</label>
+                            <label className={styles.form_label} htmlFor="">D Separación entre conductores en paralelo [m]</label>
                             <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={spacingParallelConductors} onChange={setSpacingParallelConductors}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">Dm Separación máxima entre dos puntos de la malla [m]</label>
+                            <label className={styles.form_label} htmlFor="">Dm Separación máxima entre dos puntos de la malla [m]</label>
                             <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={maximumDistanceAnyTwoPoints} onChange={setMaximumDistanceAnyTwoPoints}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">d Diametro del conductor de malla [m]</label>
+                            <label className={styles.form_label} htmlFor="">d Diametro del conductor de malla [m]</label>
                             <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.00001" value={conductorDiameter} onChange={setConductorDiameter}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">Lx Largo máximo de malla en eje "x" [m]</label>
+                            <label className={styles.form_label} htmlFor="">Lx Largo máximo de malla en eje "x" [m]</label>
                             <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={maximumLxLength} onChange={setMaximumLxLength}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">Ly Largo máximo de malla en eje "y" [m]</label>
+                            <label className={styles.form_label} htmlFor="">Ly Largo máximo de malla en eje "y" [m]</label>
                             <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={maximumLyLength} onChange={setMaximumLyLength}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">Lc Largo total del conductor de la malla [m]</label>
+                            <label className={styles.form_label} htmlFor="">Lc Largo total del conductor de la malla [m]</label>
                             <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={totalConductorLength} onChange={setTotalConductorLength}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">Lp Largo total del conductor periferico de la malla [m]</label>
+                            <label className={styles.form_label} htmlFor="">Lp Largo total del conductor periferico de la malla [m]</label>
                             <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={perimeterConductorLength} onChange={setPerimeterConductorLength}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">Área de la malla [m2]</label>
+                            <label className={styles.form_label} htmlFor="">Área de la malla [m2]</label>
                             <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={gridArea} onChange={setGridArea}/>
                         </div>
                     </section>
                     <section className={styles.s_c_real_geometrical_parameters_container}>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">Calcular Factores de composición geometrica</label>
+                            <label className={styles.form_label} htmlFor="">Calcular Factores de composición geometrica</label>
                             <button type="button" onClick={()=> { handleGeometricalFactors(); handleGeometricalFactor() }}>Calcular n</button>
                         </div>
                         <div className={styles.s_c_cs_result}>
@@ -445,15 +445,15 @@ function StepContactVoltage () {
                             <input className={styles.s_c_v_cs_form_inp} type="checkbox" name="withoutVerticalRods" id="without_vertical_rods" checked={withOrWithoutVerticalRods === "withoutVerticalRods"} onChange={handleVerticalRods}/>
                         </div>
                         <div className={withOrWithoutVerticalRods === "withoutVerticalRods" ? styles.deactive : styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">Lr Largo de las barras verticales [m]</label>
+                            <label className={styles.form_label} htmlFor="">Lr Largo de las barras verticales [m]</label>
                             <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={rodLength} onChange={setRodLength}/>
                         </div>
                         <div className={withOrWithoutVerticalRods === "withoutVerticalRods" ? styles.deactive : styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">LR Largo total de las barras verticales [m]</label>
+                            <label className={styles.form_label} htmlFor="">LR Largo total de las barras verticales [m]</label>
                             <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={rodTotalLength} onChange={setRodTotalLength}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">Calcular factores de corrección K</label>
+                            <label className={styles.form_label} htmlFor="">Calcular factores de corrección K</label>
                             <button type="button" onClick={ () => {
                                 handleCorrectionFactors(withOrWithoutVerticalRods);
                                 handleKm();
@@ -482,7 +482,7 @@ function StepContactVoltage () {
                     </section>
                     <section>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">Ig [A]</label>
+                            <label className={styles.form_label} htmlFor="">Ig [A]</label>
                             <input className={styles.s_c_v_cs_form_inp} id="" type="number" step="0.01" value={maximumGridCurrent} onChange={setMaximumGridCurrent}/>
                         </div>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
@@ -496,7 +496,7 @@ function StepContactVoltage () {
                     </section>
                     <section className={styles.s_c_real_label_inp_container}>
                         <div className={styles.s_c_v_cs_form_label_inp_container}>
-                            <label className={styles.s_c_real_label} htmlFor="">Calcular Ks y Ls para Voltaje de paso real</label>
+                            <label className={styles.form_label} htmlFor="">Calcular Ks y Ls para Voltaje de paso real</label>
                             <button onClick={handleLsAndKs}>Calcular Ks y Ls</button>
                         </div>
                         <div className={styles.s_c_cs_result}>
