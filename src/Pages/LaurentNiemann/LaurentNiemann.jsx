@@ -2,9 +2,20 @@ import { useState } from "react"
 import { NavLink } from "react-router-dom"
 import styles from "../StylesToAllResistanceCal.module.css"
 
+import CardEquations from "../../Components/CardEquations/CardEquations"
+
 import groundingGrid from "../../assets/Images/malla_puesta_a_tierra.png"
+import equetionImage from "../../assets/Images/LaurentNiemann.jpg"
+
 
 function LaurentNiemann () {
+    
+    // Equation image handle //
+    const [showEquation, setShowEquation] = useState(false)
+    function handleShowEquation () {
+        setShowEquation(!showEquation)
+    }
+    //-------------------------------//
 
     const piValue = Math.PI
 
@@ -46,6 +57,14 @@ function LaurentNiemann () {
         <section className={styles.main_container}>
             <section className={styles.title_image_container}>
                 <h2 className={styles.title}>Malla de Puesta a Tierra - Laurent y Niemann</h2>
+                <section>
+                    <h3 className={styles.show_equation_title} onClick={handleShowEquation}>Ver ecuación</h3>
+                    <article className={showEquation ? styles.show_equation : styles.hide_equation}>
+                        <CardEquations 
+                            equImage = {equetionImage}    
+                        />
+                    </article>
+                </section>
                 <img className={styles.image} src={groundingGrid} alt="Grounding Rod" />
             </section>
             <section className={styles.form_main_container}>
